@@ -1,0 +1,97 @@
+#!/bin/sh
+
+set -x
+
+mkdir -p ~/.ssh
+mkdir -p ~/.ssh/socks
+cd ~/.ssh
+ln -s ~/dotfile/ssh/config config 2>/dev/null || true
+cd -
+
+
+
+sudo apt-get update 1>/dev/null
+sudo apt-get install exuberant-ctags cmake  python-dev python liblua5.2-dev "lua5.2" -y 1>/dev/null
+sudo apt-get install clang -y 1>/dev/null
+sudo apt-get install libssl1.0.0 libssl-dev -y 1>/dev/null
+sudo apt-get install ruby -y 1>/dev/null
+sudo apt-get install awscli -y 1>/dev/null
+sudo apt-get install cowsay -y 1>/dev/null
+sudo apt-get install gcc -y 1>/dev/null
+sudo apt-get install g++ -y 1>/dev/null
+
+
+sudo dpkg --add-architecture i386 1>/dev/null
+sudo apt-get install libssl1.0.0:i386 -y 1>/dev/null
+sudo apt-get install libx32gcc-4.8-dev -y 1>/dev/null
+sudo apt-get install libc6-dev-i386 -y 1>/dev/null
+sudo apt-get install python -y 1>/dev/null
+sudo apt-get install python3 -y 1>/dev/null
+sudo apt-get install python-pip python-dev build-essential -y 1>/dev/null
+sudo apt install zsh -y 1>/dev/null
+sudo -H pip install --upgrade pip 1>/dev/null
+
+
+
+sudo -H pip install pwn 1>/dev/null
+
+mkdir -p ~/local/bin
+cd ~/local/bin
+if [ ! -f pbcopy ]
+then
+    ln -s ~/dotfile/install_env/copy_paste/pbcopy pbcopy
+    ln -s ~/dotfile/install_env/copy_paste/pbpaste pbpaste
+fi
+cd -
+
+# 2G swap
+SWAPFILE=/mnt/swapfile.swap
+
+sudo cat /proc/swaps| grep swapfile 1>/dev/null 2>&1
+if [ "$?" -ne "0" ]
+then
+
+	sudo swapoff -a
+	sudo rm -rf "$SWAPFILE"
+	sudo dd if=/dev/zero of=$SWAPFILE bs=1M count=2048
+	sudo mkswap $SWAPFILE
+	sudo chmod 0600 $SWAPFILE
+	sudo swapon $SWAPFILE
+	sudo cp ./install_env/swapfile /etc/init.d/swapfile
+	sudo chmod 0550 /etc/init.d/swapfile
+	sudo update-rc.d swapfile defaults
+fi
+
+
+cd ./shell/
+bash ./setup.sh
+cd -
+
+source ~/.bashrc
+export PATH=$HOME/vim80/bin:$PATH
+
+
+
+cd ./tmux/
+if [ ! -f /home/ubuntu/local/bin/tmux ]
+then
+    bash ./tmux_install.sh 1>/dev/null
+fi
+bash ./setup.sh 1>/dev/null
+cd -
+
+
+# cp ./ssh/config ~/.ssh
+
+cd ./vim/
+bash ./setup.sh
+cd -
+
+cd ./git/
+bash setup.sh
+cd -
+
+echo "env installation complete!"
+zsh
+
+# tmux Press prefix + I (capital I, as in Install) to fetch the plugin.

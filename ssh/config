@@ -1,0 +1,49 @@
+Host github.com
+  Hostname ssh.github.com
+  StrictHostKeyChecking no
+  Port 443
+
+Host aws
+    Hostname 52.63.25.10
+    Port 22
+    User ubuntu
+    IdentityFile ~/.ssh/id_rsa
+
+
+Host unsw
+    Hostname 129.94.242.19
+    Port 22
+    User z5048663
+    IdentityFile ~/.ssh/id_rsa
+    # ProxyCommand /usr/bin/nc -x 127.0.0.1:1081 %h %p
+Host unsw1
+    Hostname 129.94.242.49
+    Port 22
+    User z5048663
+    IdentityFile ~/.ssh/id_rsa
+
+Host alihk
+    Hostname 47.89.42.151
+    Port 22
+    User root
+    IdentityFile ~/.ssh/id_rsa
+
+Host unsw_proxy
+    Hostname 129.94.242.19
+    Port 22
+    User z5048663
+    IdentityFile ~/.ssh/id_rsa
+    ProxyCommand /usr/bin/nc -X 5 -x localhost:6153 %h %p
+
+Host *
+    TCPKeepAlive yes
+    ServerAliveInterval 3
+    ServerAliveCountMax 100
+    TCPKeepAlive yes
+    ControlMaster auto
+    ControlPersist yes
+    ControlPath ~/.ssh/socks/%h-%p-%r
+
+RemoteForward 42224 127.0.0.1:42224
+RemoteForward 42225 127.0.0.1:42225
+

@@ -1,0 +1,32 @@
+#! /bin/sh
+# /etc/init.d/swapfile
+#
+# Some things that run always go here
+
+sudo rm -f /tmp/program.pid
+sudo touch /tmp/program.pid
+sudo chmod 0777 /tmp/program.pid
+
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+  start)
+    echo "Starting swapfile "
+    swapon /mnt/swapfile.swap
+    ;;
+  stop)
+    echo "Stopping swapfile"
+    swapoff /mnt/swapfile.swap
+    ;;
+  restart|reload|force-reload)
+    echo "Restarting swapfile"
+    swapoff /mnt/swapfile.swap
+    swapon /mnt/swapfile.swap
+    ;;
+  *)
+    echo "Usage: /etc/init.d/swapfile {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0

@@ -1,0 +1,71 @@
+# enable color support of ls and also add handy aliases
+export CLICOLOR=1
+# export GREP_OPTIONS='--color=auto' GREP_COLOR='10;32'
+export SVN_EDITOR=vim
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
+export TERM=xterm-256color
+#for colored man pages
+export LESS_TERMCAP_mb=$'\E[01;32m' #值
+export LESS_TERMCAP_md=$'\E[01;33m' #项
+
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'
+export LESS_TERMCAP_so=$'\E[01;44;33m'
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+
+export FIGNORE='.o:.bak:.tmp'
+export EDITOR=vim
+export TMP=$HOME/tmp
+export TMPDIR=$HOME/tmp
+export USE_CCACHE=1
+
+
+# colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+
+ulimit -Sc unlimited
+
+
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    #alias dir='dir --color=auto'
+    #alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+
+# some more ls aliases
+alias ll='ls -lF'
+alias la='ls -lA'
+alias l='ls -CF'
+
+alias vi='vim'
+alias ctags='ctags -R --sort=yes --c++-kinds=+p --fields=+ias --extra=+q .'
+alias tmux='TERM=screen-256color-bce tmux -S $TMPDIR/tmux_session'
+alias os161-objdump='os161-objdump -mmips:isa32 '
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+export PATH=$HOME/vim80/bin/:$HOME/local/bin/:/usr/local/go/bin/:$HOME/bin/:$PATH
+export PATH=$HOME/os161/sys161-1.14/build-sys161/:/import/adams/3/z5048663/local/bin:/home/cs3231/bin/:$PATH
+export PATH=$HOME/local/bin/:/usr/local/go/bin/:$HOME/bin/:$PATH
+export PATH=$PATH:./
+alias color='for i in {0..255} ; do     printf "\x1b[48;5;%sm%3d\e[0m " "$i" "$i";     if (( i == 15 )) || (( i > 15 )) && (( (i-15) % 6 == 0 )); then         printf "\n";     fi; done'
+aws 1>/dev/null 2>&1
+if [ "$?" = "0" ]
+then
+alias sshaws="ssh ubuntu@`aws ec2 describe-instances --instance-ids i-098237bf88c58c6a5 | grep amazonaws | awk -F ':' '{print $2}' | sed 's/[\",]//g'|sed 's/ //g'|head -1`"
+fi
+# alias sshaws="ssh $aws_host"
+
