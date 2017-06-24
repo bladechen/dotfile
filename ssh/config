@@ -37,13 +37,19 @@ Host unsw_proxy
 
 Host *
     TCPKeepAlive yes
-    ServerAliveInterval 3
-    ServerAliveCountMax 100
-    TCPKeepAlive yes
+# FIXME following may cause problem for remote pbpaste/pbcopy
+    ServerAliveInterval 10
+    ServerAliveCountMax 10
+
+    # keep ssh connection reused in a small time interval
     ControlMaster auto
     ControlPersist yes
     ControlPath ~/.ssh/socks/%h-%p-%r
 
-RemoteForward 42224 127.0.0.1:42224
-RemoteForward 42225 127.0.0.1:42225
+    # disable key checking, which is weired, but maybe insecure
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+    RemoteForward 42224 127.0.0.1:42224
+    RemoteForward 42225 127.0.0.1:42225
 

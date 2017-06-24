@@ -3,8 +3,10 @@
 set -x
 
 mkdir -p ~/.ssh
+chmod 0666 ~/.ssh
 mkdir -p ~/.ssh/socks
 cd ~/.ssh
+mv ~/.ssh/config ~/.ssh/config.bak 2>/dev/null || true
 ln -s ~/dotfile/ssh/config config 2>/dev/null || true
 cd -
 
@@ -20,6 +22,8 @@ sudo apt-get install cowsay -y 1>/dev/null
 sudo apt-get install gcc -y 1>/dev/null
 sudo apt-get install g++ -y 1>/dev/null
 
+sudo apt install linux-tools-common -y 1>/dev/null
+
 
 sudo dpkg --add-architecture i386 1>/dev/null
 sudo apt-get install libssl1.0.0:i386 -y 1>/dev/null
@@ -29,11 +33,28 @@ sudo apt-get install python -y 1>/dev/null
 sudo apt-get install python3 -y 1>/dev/null
 sudo apt-get install python-pip python-dev build-essential -y 1>/dev/null
 sudo apt install zsh -y 1>/dev/null
+
+sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password 123456'
+sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password 123456'
+sudo apt-get -y install mysql-server 1>/dev/null
+sudo apt-get -y install mysql-client 1>/dev/null
 sudo -H pip install --upgrade pip 1>/dev/null
 
 
 
+
 sudo -H pip install pwn 1>/dev/null
+
+
+
+sudo apt-get install htop tig mycli jq -y 1>/dev/null
+sudo -H pip install cheat 1>/dev/null
+
+rm -rf ~/.cheat 1>/dev/null
+cd ~
+ln -s $HOME/dotfile/misc/cheat_sheat .cheat
+cd -
+
 
 mkdir -p ~/local/bin
 cd ~/local/bin
@@ -73,10 +94,6 @@ export PATH=$HOME/vim80/bin:$PATH
 
 
 cd ./tmux/
-if [ ! -f /home/ubuntu/local/bin/tmux ]
-then
-    bash ./tmux_install.sh 1>/dev/null
-fi
 bash ./setup.sh 1>/dev/null
 cd -
 

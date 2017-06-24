@@ -135,3 +135,5 @@ source ~/.git-completion.bash
 export SHELL=$BASH_SHELL
 
 echo 'start bash successfully!'
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

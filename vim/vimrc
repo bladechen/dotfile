@@ -1,4 +1,6 @@
-" Author:   Liang Feng <liang.feng98 AT gmail DOT com>
+" Author:   bladechen <chenshenglong1990 AT gmail DOT com>
+"           forked from https://github.com/liangfeng/dotvim
+"
 " Brief:    This vimrc supports Mac OS, Linux(Ubuntu) and Windows(both GUI & console version).
 "           While it is well commented, just in case some commands confuse you,
 "           please RTFM by ':help WORD' or ':helpgrep WORD'.
@@ -353,6 +355,12 @@ function! s:TabSwitch(...)
 endfunction
 
 command! -complete=file -nargs=+ TabSwitch call s:TabSwitch(<q-args>)
+
+vnoremap <silent> <leader>y :<CR>:let @a=@" \| execute "normal! vgvy" \| let res=system("pbcopy", @") \| let @"=@a<CR>
+nmap <silent> <leader>p :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+nmap <silent> <leader>ip :set invpaste<CR>
+
+cnoremap w!! :silent w !sudo tee % > /dev/null  <CR>
 
 " End of Editting }}}
 
@@ -809,7 +817,7 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 " End of xml }}}
 
 
-
+" vimrc {{{
 if s:is_unix
     let g:vim_cfg_dir = '.vim'
 elseif s:is_windows
@@ -831,8 +839,6 @@ nnoremap <silent> <Leader>v :call <SID>OpenVimrc()<CR>
 " End of vimrc }}}
 
 
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin - context_filetype {{{
 " https://github.com/Shougo/context_filetype.vim
@@ -843,6 +849,7 @@ call dein#add( 'Shougo/context_filetype.vim', {
             \ })
 
 " End of context_filetype }}}
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin - delimitMate {{{
@@ -1852,6 +1859,15 @@ call dein#add('Shougo/vimproc.vim', {
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin - dein-command.vim {{{
+" https://github.com/haya14busa/dein-command.vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+call dein#add('haya14busa/dein-command.vim')
+
+" End of dein-command }}}
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin - vimshell {{{
 " https://github.com/Shougo/vimshell
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1921,6 +1937,16 @@ call dein#add('sukima/xmledit', {
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin - vim-signature {{{
+" https://github.com/kshenoy/vim-signature
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TODO: Need a try.
+call dein#add('kshenoy/vim-signature')
+
+" End of vim-signature }}}
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin - YankRing {{{
 " https://github.com/vim-scripts/YankRing.vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1944,6 +1970,55 @@ if s:is_unix
 endif
 
 " End of YCM-Generator }}}
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin - vim-cpp-enhanced-highlight {{{
+" https://github.com/octol/vim-cpp-enhanced-highlight
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" call dein#add('octol/vim-cpp-enhanced-highlight', {
+call dein#add('bladechen/cpp_highlight', {
+                \ 'on_ft' : ['c', 'cpp']
+                \ })
+
+    let plugin_name = 'cpp_highlight'
+    let normalized_plugin_name = dein#get(plugin_name).normalized_name
+
+    function! s:hook_source_{normalized_plugin_name}() abort
+
+
+		" Highlighting of class scope is disabled by default. To enable set
+
+		let g:cpp_class_scope_highlight = 1
+
+		" Highlighting of member variables is disabled by default. To enable set
+
+		let g:cpp_member_variable_highlight = 1
+
+		" Highlighting of class names in declarations is disabled by default. To enable set
+
+		let g:cpp_class_decl_highlight = 1
+
+		" There are two ways to hightlight template functions. Either
+
+		let g:cpp_experimental_simple_template_highlight = 1
+
+		" which works in most cases, but can be a little slow on large files. Alternatively set
+
+		let g:cpp_experimental_template_highlight = 1
+
+		" which is a faster implementation but has some corner cases where it doesn't work.
+		" Note: C++ template syntax is notoriously difficult to parse, so don't expect this feature to be perfect.
+		" Highlighting of library concepts is enabled by
+		" This will highlight the keywords concept and requires as well as all named requirements (like DefaultConstructible) in the standard library.
+
+		let g:cpp_concepts_highlight = 1
+
+
+    endfunction
+    call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
+    " let g:ycm_key_list_select_completion = ['<Enter>']
+" End of YouCompleteMe }}}
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1994,8 +2069,6 @@ endif
 " End of YouCompleteMe }}}
 
 
-
-
 " Call this finally, since use neobundle#begin()
 call dein#end()
 filetype plugin indent on
@@ -2003,8 +2076,5 @@ filetype plugin indent on
 
 set tags+=./tags,./../tags,./../../tags,./../../../tags,../../../../tags,../../../../../tags
 
-vnoremap <silent> <leader>y :<CR>:let @a=@" \| execute "normal! vgvy" \| let res=system("pbcopy", @") \| let @"=@a<CR>
-nmap <silent> <leader>p :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
-cnoremap w!! :silent w !sudo tee % > /dev/null  <CR>
 " vim: set et sw=4 ts=4 fdm=marker ff=unix:
 

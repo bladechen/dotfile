@@ -11,13 +11,16 @@ then
     git clone git@github.com:vim/vim.git
     cd -
     cd ~/tmp/vim/vim
+    mkdir -p $HOME/vim80/
     # ./configure --prefix=$HOME/vim81/  --with-features=huge   --enable-rubyinterp  --enable-pythoninterp       --with-python-config-dir=/usr/lib/python2.7/             --enable-perlinterp             --enable-gui=gtk2 --enable-cscope             --enable-luainterp=yes  --enable-cscope  --enable-largefile
     ./configure --prefix=$HOME/vim80/  --with-features=huge   --enable-rubyinterp  --enable-pythoninterp                --enable-perlinterp             --enable-gui=gtk2 --enable-cscope             --enable-luainterp=yes  --enable-cscope  --enable-largefile 1>/dev/null
 
     make 1>/dev/null
     make install 1>/dev/null
+    rm -rf ~/tmp/vim
 
 fi
+
 if [ ! -d ~/.vim/bundle ]
 then
     mkdir ~/.vim/
@@ -25,17 +28,26 @@ then
     mkdir -p bundle
 
     curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-    sh ./installer.sh ./bundle 1>/dev/null
+    bash ./installer.sh ./bundle 1>/dev/null
 
-cd -
+    cd -
 fi
 
 
 cd ~
 rm ~/.vimrc 2>/dev/null || true
 ln -s $CUR .vimrc
-#$HOME/vim80/bin/vim +'call dein#install()' &
-$HOME/vim80/bin/vim +'call dein#update()' +qall
+
+
+# dein update may not install plugin, try several times
+for ((i=1;i<5;i++))
+do
+    $HOME/vim80/bin/vim +'call dein#update()' +qall
+    if [ -d ~/.vim/bundle//repos//github.com//Valloric/YouCompleteMe/ ]
+    then
+        break
+    fi
+done
 
 
 cd ~/.vim/bundle//repos//github.com//Valloric/YouCompleteMe/
