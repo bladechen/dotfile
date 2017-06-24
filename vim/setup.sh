@@ -18,6 +18,7 @@ then
     make 1>/dev/null
     make install 1>/dev/null
     rm -rf ~/tmp/vim
+    cd -
 
 fi
 

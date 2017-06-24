@@ -7,7 +7,7 @@ if [[ ! -d ~/.oh-my-zsh ]]; then
     # sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
 
-git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions 2>/dev/null || true
+git clone git://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions 2>/dev/null || true
 CUR=`pwd`/zshrc
 cd ~
 mv ~/.zshrc ~/.zshrc_bak 2>/dev/null || true

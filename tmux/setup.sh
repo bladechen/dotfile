@@ -7,6 +7,7 @@ if [ ! -d $HOME/.tmux/plugins ]
 then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
+CUR=`pwd`/tmux.conf
 
 cd ~
 rm ~/.tmux.conf 2>/dev/null|| true

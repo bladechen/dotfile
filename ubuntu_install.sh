@@ -3,7 +3,7 @@
 set -x
 
 mkdir -p ~/.ssh
-chmod 0666 ~/.ssh
+chmod 0700 ~/.ssh
 mkdir -p ~/.ssh/socks
 cd ~/.ssh
 mv ~/.ssh/config ~/.ssh/config.bak 2>/dev/null || true
@@ -108,6 +108,14 @@ cd ./git/
 bash setup.sh
 cd -
 
+cd ~/local/
+git clone https://github.com/facebook/PathPicker.git
+cd PathPicker/
+ln -s "$(pwd)/fpp" /usr/local/bin/fpp
+
+git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+ ~/.fzf/install --all --no-update-rc
+cd ~
 echo "env installation complete!"
 zsh
 
