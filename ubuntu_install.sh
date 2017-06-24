@@ -26,6 +26,7 @@ sudo apt install linux-tools-common -y 1>/dev/null
 
 
 sudo dpkg --add-architecture i386 1>/dev/null
+sudo apt-get update 1>/dev/null
 sudo apt-get install libssl1.0.0:i386 -y 1>/dev/null
 sudo apt-get install libx32gcc-4.8-dev -y 1>/dev/null
 sudo apt-get install libc6-dev-i386 -y 1>/dev/null
