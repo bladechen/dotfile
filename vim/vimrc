@@ -1974,7 +1974,7 @@ endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin - vim-cpp-enhanced-highlight {{{
-" https://github.com/octol/vim-cpp-enhanced-highlight
+" forked form https://github.com/octol/vim-cpp-enhanced-highlight
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " call dein#add('octol/vim-cpp-enhanced-highlight', {
 call dein#add('bladechen/cpp_highlight', {
@@ -2018,7 +2018,23 @@ call dein#add('bladechen/cpp_highlight', {
     endfunction
     call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
     " let g:ycm_key_list_select_completion = ['<Enter>']
-" End of YouCompleteMe }}}
+" End of vim-cpp-enhanced-highlight }}}
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin - fzf.vim {{{
+" https://github.com/junegunn/fzf.vim
+" TODO replaced by https://github.com/Shougo/denite.nvim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
+" call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+" let plugin_name = 'fzf.vim'
+" let normalized_plugin_name = dein#get(plugin_name).normalized_name
+"
+" function! s:hook_source_{normalized_plugin_name}() abort
+" endfunction
+" call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
+" End of fzf }}}
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
