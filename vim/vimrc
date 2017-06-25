@@ -510,6 +510,14 @@ vnoremap <silent> <S-Tab> <gv
 set scrolloff=7
 
 if s:is_gui_running
+    " disable cursor blink
+    set gcr=a:block-blinkon0
+    " disable scroll bar
+    set guioptions-=l
+    set guioptions-=L
+    set guioptions-=r
+    set guioptions-=R
+    " disable menu & tool bar
     set guioptions-=m
     set guioptions-=T
     set guioptions+=c
@@ -1001,6 +1009,8 @@ let plugin_name = 'vim-fswitch'
 let normalized_plugin_name = dein#get(plugin_name).normalized_name
 
 function! s:hook_source_{normalized_plugin_name}() abort
+    " *.cpp 和 *.h 间切换
+    nmap <silent> <Leader>sw :FSHere<cr>
     command! FS :FSSplitAbove
     let g:fsnonewfiles = 1
 endfunction
@@ -1302,6 +1312,28 @@ call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . norma
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin - autotag {{{
+" https://github.com/bladechen/autotag
+" forked from https://github.com/craigemery/vim-autotag
+" http://ctags.sourceforge.net/
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set tags=./tags;,tags;
+call dein#add('bladechen/autotag')
+
+let plugin_name = 'autotag'
+let normalized_plugin_name = dein#get(plugin_name).normalized_name
+
+function! s:hook_source_{normalized_plugin_name}() abort
+    let g:autotagTagsFile="tags"
+
+endfunction
+
+call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
+" End of tagbar }}}
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin - tagbar {{{
 " https://github.com/majutsushi/tagbar
 " http://ctags.sourceforge.net/
@@ -1318,7 +1350,7 @@ function! s:hook_source_{normalized_plugin_name}() abort
 
     nnoremap <silent> <Leader>b :TagbarToggle<CR>
     let g:tagbar_left = 1
-    let g:tagbar_width = 30
+    let g:tagbar_width = 32
     let g:tagbar_compact = 1
     let g:go_auto_type_info = 1
     let &l:updatetime= get(g:, "go_updatetime", 500)
@@ -1611,6 +1643,7 @@ let normalized_plugin_name = dein#get(plugin_name).normalized_name
 
 function! s:hook_source_{normalized_plugin_name}() abort
     nmap <silent> <Leader>n <Plug>(easymotion-prefix)
+    vmap <silent> <Leader>n <Plug>(easymotion-prefix)
 endfunction
 
 call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
@@ -1619,7 +1652,6 @@ call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . norma
 
 
 " End of vim-easymotion }}}
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin - vim-fugitive {{{
@@ -1632,6 +1664,18 @@ call dein#add('tpope/vim-fugitive', {
 
 " End of vim-fugitive }}}
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin - vim-instant-markdown {{{
+" https://github.com/suan/vim-instant-markdown
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" only works in local machine.
+if s:is_mac
+    call dein#add('suan/vim-instant-markdown')
+endif
+
+" End of vim-instant-markdown }}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin - vim-gitgutter {{{
@@ -1688,6 +1732,7 @@ call dein#add('tfnico/vim-gradle', {
 " Plugin - vim-multiple-cursors {{{
 " https://github.com/terryma/vim-multiple-cursors
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TODO learn it
 call dein#add('terryma/vim-multiple-cursors', {
             \ 'lazy' : 1,
             \ 'on_map' : ['n', '<C-n>']
@@ -1839,7 +1884,7 @@ function! s:OpenVimprj()
     endif
 endfunction
 
-nnoremap <silent> <Leader>p :call <SID>OpenVimprj()<CR>
+" nnoremap <silent> <Leader>p :call <SID>OpenVimprj()<CR>
 
 call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
 " End of vimprj }}}
@@ -1943,6 +1988,31 @@ call dein#add('sukima/xmledit', {
 " TODO: Need a try.
 call dein#add('kshenoy/vim-signature')
 
+""  mx           Toggle mark 'x' and display it in the leftmost column
+""  dmx          Remove mark 'x' where x is a-zA-Z
+""
+""  m,           Place the next available mark
+""  m.           If no mark on line, place the next available mark. Otherwise, remove (first) existing mark.
+""  m-           Delete all marks from the current line
+""  m<Space>     Delete all marks from the current buffer
+""  ]`           Jump to next mark
+""  [`           Jump to prev mark
+""  ]'           Jump to start of next line containing a mark
+""  ['           Jump to start of prev line containing a mark
+""  `]           Jump by alphabetical order to next mark
+""  `[           Jump by alphabetical order to prev mark
+""  ']           Jump by alphabetical order to start of next line having a mark
+""  '[           Jump by alphabetical order to start of prev line having a mark
+""  m/           Open location list and display marks from current buffer
+""
+""  m[0-9]       Toggle the corresponding marker !@#$%^&*()
+""  m<S-[0-9]>   Remove all markers of the same type
+""  ]-           Jump to next line having a marker of the same type
+""  [-           Jump to prev line having a marker of the same type
+""  ]=           Jump to next line having a marker of any type
+""  [=           Jump to prev line having a marker of any type
+""  m?           Open location list and display markers from current buffer
+""  m<BS>        Remove all markers
 " End of vim-signature }}}
 
 
@@ -1977,46 +2047,46 @@ endif
 " forked form https://github.com/octol/vim-cpp-enhanced-highlight
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " call dein#add('octol/vim-cpp-enhanced-highlight', {
-call dein#add('bladechen/cpp_highlight', {
-                \ 'on_ft' : ['c', 'cpp']
-                \ })
-
-    let plugin_name = 'cpp_highlight'
-    let normalized_plugin_name = dein#get(plugin_name).normalized_name
-
-    function! s:hook_source_{normalized_plugin_name}() abort
-
-
-		" Highlighting of class scope is disabled by default. To enable set
-
-		let g:cpp_class_scope_highlight = 1
-
-		" Highlighting of member variables is disabled by default. To enable set
-
-		let g:cpp_member_variable_highlight = 1
-
-		" Highlighting of class names in declarations is disabled by default. To enable set
-
-		let g:cpp_class_decl_highlight = 1
-
-		" There are two ways to hightlight template functions. Either
-
-		let g:cpp_experimental_simple_template_highlight = 1
-
-		" which works in most cases, but can be a little slow on large files. Alternatively set
-
-		let g:cpp_experimental_template_highlight = 1
-
-		" which is a faster implementation but has some corner cases where it doesn't work.
-		" Note: C++ template syntax is notoriously difficult to parse, so don't expect this feature to be perfect.
-		" Highlighting of library concepts is enabled by
-		" This will highlight the keywords concept and requires as well as all named requirements (like DefaultConstructible) in the standard library.
-
-		let g:cpp_concepts_highlight = 1
-
-
-    endfunction
-    call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
+" call dein#add('bladechen/cpp_highlight', {
+"                 \ 'on_ft' : ['c', 'cpp']
+"                 \ })
+"
+"     let plugin_name = 'cpp_highlight'
+"     let normalized_plugin_name = dein#get(plugin_name).normalized_name
+"
+"     function! s:hook_source_{normalized_plugin_name}() abort
+"
+"
+" 		" Highlighting of class scope is disabled by default. To enable set
+"
+" 		let g:cpp_class_scope_highlight = 1
+"
+" 		" Highlighting of member variables is disabled by default. To enable set
+"
+" 		let g:cpp_member_variable_highlight = 1
+"
+" 		" Highlighting of class names in declarations is disabled by default. To enable set
+"
+" 		let g:cpp_class_decl_highlight = 1
+"
+" 		" There are two ways to hightlight template functions. Either
+"
+" 		let g:cpp_experimental_simple_template_highlight = 1
+"
+" 		" which works in most cases, but can be a little slow on large files. Alternatively set
+"
+" 		let g:cpp_experimental_template_highlight = 1
+"
+" 		" which is a faster implementation but has some corner cases where it doesn't work.
+" 		" Note: C++ template syntax is notoriously difficult to parse, so don't expect this feature to be perfect.
+" 		" Highlighting of library concepts is enabled by
+" 		" This will highlight the keywords concept and requires as well as all named requirements (like DefaultConstructible) in the standard library.
+"
+" 		let g:cpp_concepts_highlight = 1
+"
+"
+"     endfunction
+"     call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
     " let g:ycm_key_list_select_completion = ['<Enter>']
 " End of vim-cpp-enhanced-highlight }}}
 
@@ -2056,7 +2126,6 @@ if s:is_unix
 
     let g:ycm_filetype_whitelist = { 'c': 1, 'cpp': 1, 'python' : 1 }
     let g:ycm_confirm_extra_conf = 0
-    let g:ycm_complete_in_comments_and_strings = 1
     " let g:ycm_global_ycm_extra_conf = '~/' . g:vim_cfg_dir . '/ycm_extra_conf.py'
     let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
@@ -2090,7 +2159,6 @@ call dein#end()
 filetype plugin indent on
 
 
-set tags+=./tags,./../tags,./../../tags,./../../../tags,../../../../tags,../../../../../tags
 
 " vim: set et sw=4 ts=4 fdm=marker ff=unix:
 

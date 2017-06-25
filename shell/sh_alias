@@ -61,7 +61,7 @@ alias la='ls -lA'
 alias l='ls -CF'
 
 alias vi='vim'
-alias ctags='ctags -R --sort=yes --c++-kinds=+p --fields=+ias --extra=+q .'
+alias ctags='ctags -R --sort=yes --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+liasS --extra=+q .'
 alias tmux='TERM=screen-256color-bce tmux -S $TMPDIR/tmux_session'
 alias os161-objdump='os161-objdump -mmips:isa32 '
 

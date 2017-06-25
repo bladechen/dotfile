@@ -215,3 +215,4 @@ fi
 
 . ~/dotfile/shell/sh_alias
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
