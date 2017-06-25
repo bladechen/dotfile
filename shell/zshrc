@@ -92,9 +92,6 @@ source $ZSH/oh-my-zsh.sh
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 
-if [ -f ~/dotfile/shell/sh_alias ]; then
-    . ~/dotfile/shell/sh_alias
-fi
 
 
 HISTFILESIZE=10000000
@@ -110,15 +107,7 @@ setopt nomenucomplete
 
 bindkey '\e[A' history-beginning-search-backward
 bindkey '\e[B' history-beginning-search-forward
-# autoload -U up-line-or-beginning-search
-# autoload -U down-line-or-beginning-search
-# zle -N up-line-or-beginning-search
-# zle -N down-line-or-beginning-search
-# bindkey "^[[A" up-line-or-beginning-search # Up
-# bindkey "^[[B" down-line-or-beginning-search # Down
 
-# export fpath=(~/.oh-my-zsh/custom/plugins/zsh-completions/src $fpath)
-# export PATH=$PATH:./:/home/bladechen/os161/sys161-1.14/build-sys161/:/home/bladechen/local/bin/:~/bin
 function exists { which $1 &> /dev/null }
 if exists percol; then
     function percol_select_history() {
@@ -218,7 +207,11 @@ DISABLE_UNTRACKED_FILES_DIRTY=true
 DISABLE_UPDATE_PROMPT=true
 
 
-cowthink 'hello bladechen!' 2>/dev/null|| true
-echo 'start zsh successfully!'
+if [[ -o login ]]; then
+    . ~/dotfile/shell/sh_alias
+    cowthink 'hello bladechen!' 2>/dev/null|| true
+    echo 'start zsh successfully!'
+fi
 
+. ~/dotfile/shell/sh_alias
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -109,15 +109,24 @@ cd ./git/
 bash setup.sh
 cd -
 
-cd ~/local/
-git clone https://github.com/facebook/PathPicker.git
-cd PathPicker/
-ln -s "$(pwd)/fpp" $HOME/local/bin/fpp
+if [ ! -f ~/local/PathPicker ]
+then
+    cd ~/local/
+    git clone https://github.com/facebook/PathPicker.git
+    cd PathPicker/
+    ln -s "$(pwd)/fpp" $HOME/local/bin/fpp
+else
+    cd ~/local/PathPicker/
+    git pull
+fi
 
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
- ~/.fzf/install --all --no-update-rc
+if [ ! -f ~/.fzf ]
+then
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install --all --no-update-rc
+else
+    cd ~/.fzf && git pull && ./install
+fi
 cd ~
 echo "env installation complete!"
 zsh
-
-# tmux Press prefix + I (capital I, as in Install) to fetch the plugin.

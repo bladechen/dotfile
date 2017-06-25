@@ -27,6 +27,14 @@ export USE_CCACHE=1
 # https://github.com/chrisallenlane/cheat
 export CHEATCOLORS=true
 
+# https://github.com/junegunn/fzf
+# Use ~~ as the trigger sequence instead of the default **
+export FZF_COMPLETION_TRIGGER='~~'
+export FZF_CTRL_R_OPTS="--color=fg+:219"
+export FZF_ALT_C_OPTS="--color=fg+:219"
+export  FZF_CTRL_T_OPTS="--color=fg+:219"
+
+export FZF_DEFAULT_OPTS='--height 50% '
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
