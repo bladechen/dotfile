@@ -81,10 +81,10 @@ alias sshaws="ssh ubuntu@`aws ec2 describe-instances --instance-ids i-098237bf88
 fi
 
 
-# export USE_YCM=1
-# if echo $HOME | grep -q "import" 2>/dev/null
-# then
-#     export USE_YCM=0
-# fi
+export USE_YCM=1
+if echo $HOME | grep -q "import" 2>/dev/null
+then
+    export USE_YCM=0
+fi
 # alias sshaws="ssh $aws_host"
 
