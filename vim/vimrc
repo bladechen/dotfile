@@ -1725,7 +1725,7 @@ call dein#add('tpope/vim-fugitive', {
 " only works in local machine.
 if s:is_mac
     call dein#add('suan/vim-instant-markdown', {
-                on_ft: 'md'
+                \on_ft: 'md'
                 \})
 endif
 
