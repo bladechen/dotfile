@@ -1107,129 +1107,6 @@ call dein#set_hook(plugin_name, 'hook_post_source', function('s:hook_post_source
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin - clang_complete {{{
-" https://github.com/Rip-Rip/clang_complete
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" NeoBundle 'Rip-Rip/clang_complete' , {'build' : {'unix' : "vim clang_complete.vmb -c 'so %' -c 'q'"},'autoload' : {'filetypes' : ['c', 'cpp']}}
-" let s:bundle = neobundle#get('clang_complete')
-" function! s:bundle.hooks.on_source(bundle)
-"      let g:clang_library_path='/usr/lib/llvm-3.8/lib'
-"      " autocmd FileType c setlocal completefunc=ClangComplete
-"      " autocmd FileType cpp setlocal completefunc=ClangComplete
-"      "
-"      " autocmd FileType c setlocal omnifunc=ClangComplete
-"      " autocmd FileType cpp setlocal omnifunc=ClangComplete
-"      " let g:clang_snippets = 1
-"      let g:clang_snippets_engine = 'clang_complete'
-"      let g:clang_jumpto_back_key = "<C-Y>"
-"      let g:clang_jumpto_declaration_key = "<C-[>"
-"      inoremap <silent>  <C-z> <C-x><C-u>
-"     " nnoremap <leader>jc :g:ClangGotoDeclaration()<CR>
-"     " nnoremap <leader>jb :g:ClangGotoDeclaration()<CR>
-"      " set completeopt=menu
-"
-" endfunction
-
-
-
-" End of clang_complete }}}
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin - OmniCppComplete {{{
-" https://github.com/vim-scripts/OmniCppComplete
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" NeoBundle 'vim-scripts/OmniCppComplete' , {'autoload' : {'filetypes' : ['c', 'cpp']}}
-" let s:bundle = neobundle#get('OmniCppComplete')
-"
-" function! s:bundle.hooks.on_source(bundle)
-"     let OmniCpp_NamespaceSearch = 1
-"     let OmniCpp_GlobalScopeSearch = 1
-"     let OmniCpp_ShowAccess = 1
-"     let OmniCpp_ShowPrototypeInAbbr = 1 " 显示函数参数列表
-"     " let OmniCpp_MayCompleteDot = 1   " 输入 .  后自动补全
-"     " let OmniCpp_MayCompleteArrow = 1 " 输入 -> 后自动补全
-"     " let OmniCpp_MayCompleteScope = 1 " 输入 :: 后自动补全
-"     let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-"
-"     " " 自动关闭补全窗口
-"     " au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-"     " set completeopt=menuone,menu,longest
-" endfunction
-" End of OmniCppComplete }}}
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin - neocomplete.vim {{{
-" https://github.com/Shougo/neocomplete.vim
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" TODO: add function param complete by TAB (like Vim script #1764)
-" if !s:is_nvim
-"     NeoBundleLazy 'Shougo/neocomplete.vim', {
-"                     \ 'depends' : 'Shougo/context_filetype.vim',
-"                     \ 'autoload' : {
-"                         \ 'insert' : 1,
-"                         \ },
-"                     \ }
-"
-"     let s:bundle = neobundle#get('neocomplete.vim')
-"     function! s:bundle.hooks.on_source(bundle)
-"         set showfulltag
-"         " TODO: The following two settings must be checked during vimprj overhaul.
-"         " Disable header files searching to improve performance.
-"         set complete-=i
-"         " Only scan current buffer
-"         set complete=.
-"
-"         " let g:neocomplete#enable_at_startup = 1
-"         let g:neocomplete#enable_smart_case = 1
-"         " let g:neocomplete#enable_auto_select = 0
-"         " Set minimum syntax keyword length.
-"         let g:neocomplete#sources#syntax#min_keyword_length = 2
-"
-"         " Define keyword.
-"         if !exists('g:neocomplete#keyword_patterns')
-"             let g:neocomplete#keyword_patterns = {}
-"         endif
-"         let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-"
-"         " <Tab>: completion.
-"         inoremap <silent> <expr> <Tab> pumvisible() ? '<C-n>' : '<Tab>'
-"         inoremap <silent> <expr> <S-Tab> pumvisible() ? '<C-p>' : '<S-Tab>'
-"
-"         " <C-h>, <BS>: close popup and delete backword char.
-"         inoremap <silent> <expr> <C-h> neocomplete#smart_close_popup() . '<C-h>'
-"         inoremap <silent> <expr> <BS> neocomplete#smart_close_popup() . '<C-h>'
-"         " Do NOT popup when enter <C-y> and <C-e>
-"         inoremap <silent> <expr> <C-y> neocomplete#close_popup() . '<C-y>'
-"         inoremap <silent> <expr> <C-e> neocomplete#cancel_popup() . '<C-e>'
-"
-"         " Enable heavy omni completion.
-"         if !exists('g:neocomplete#sources#omni#input_patterns')
-"             let g:neocomplete#sources#omni#input_patterns = {}
-"         endif
-"         if !exists('g:neocomplete#force_omni_input_patterns')
-" 		  let g:neocomplete#force_omni_input_patterns = {}
-" 		endif
-"
-"         let g:neocomplete#sources#omni#input_patterns.php =
-"                     \ '[^. \t]->\h\w*\|\h\w*::'
-"
-"         let g:neocomplete#sources#omni#input_patterns.c =
-"                     \ '[^.[:digit:] *\t]\%(\.\|->\)'
-"         let g:neocomplete#sources#omni#input_patterns.cpp =
-"                     \ '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-"         let g:neocomplete#sources#omni#input_patterns.python =
-"                      \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-"
-"     endfunction
-" endif
-"
-" End of neocomplete.vim }}}
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin - neomru.vim {{{
 " https://github.com/Shougo/neomru.vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1239,48 +1116,6 @@ call dein#add('Shougo/neomru.vim', {
             \ })
 
 " End of neomru.vim }}}
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin - nerdcommenter {{{
-" https://github.com/scrooloose/nerdcommenter
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"call dein#add('scrooloose/nerdcommenter')
-"let plugin_name = 'nerdcommenter'
-"let normalized_plugin_name = dein#get(plugin_name).normalized_name
-
-"function! s:hook_source_{normalized_plugin_name}() abort
-
-    "" Add spaces after comment delimiters by default
-    "let g:NERDSpaceDelims = 1
-
-    "" Use compact syntax for prettified multi-line comments
-    "let g:NERDCompactSexyComs = 1
-
-    "" Align line-wise comment delimiters flush left instead of following code indentation
-    "let g:NERDDefaultAlign = 'left'
-
-    "" Set a language to use its alternate delimiters by default
-    "let g:NERDAltDelims_c = 1
-
-    "" Add your own custom formats or override the defaults
-    ""let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
-
-    "" Allow commenting and inverting empty lines (useful when commenting a region)
-    "let g:NERDCommentEmptyLines = 1
-
-    "" Enable trimming of trailing whitespace when uncommenting
-    "let g:NERDTrimTrailingWhitespace = 1
-
-    "" If you prefer the second option then stick this line in your vimrc:
-    "let NERDCommentWholeLinesInVMode=1
-"endfunction
-
-"call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
-
-
-" End of nerdcommenter }}}
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1731,6 +1566,7 @@ endif
 
 " End of vim-instant-markdown }}}
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin - vim-gitgutter {{{
 " https://github.com/airblade/vim-gitgutter
@@ -1772,14 +1608,6 @@ call dein#add('tfnico/vim-gradle', {
 
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin - vim-move {{{
-" https://github.com/matze/vim-move
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" TODO: Need try this?
-" call dein#add('matze/vim-move')
-
-" End of vim-move }}}
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1824,16 +1652,6 @@ call dein#add('tpope/vim-surround')
 let g:surround_no_insert_mappings = 1
 
 " End of vim-surround }}}
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin - vim-visualstar {{{
-" https://github.com/thinca/vim-visualstar
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" TODO: Need a try?
-" NeoBundle 'thinca/vim-visualstar'
-
-" End of vim-visualstar }}}
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1993,6 +1811,289 @@ call dein#add('sukima/xmledit', {
 " End of xmledit }}}
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin - vim-signature {{{
+" https://github.com/kshenoy/vim-signature
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TODO: Need a try.
+call dein#add('kshenoy/vim-signature')
+
+""  mx           Toggle mark 'x' and display it in the leftmost column
+""  dmx          Remove mark 'x' where x is a-zA-Z
+""
+""  m,           Place the next available mark
+""  m.           If no mark on line, place the next available mark. Otherwise, remove (first) existing mark.
+""  m-           Delete all marks from the current line
+""  m<Space>     Delete all marks from the current buffer
+""  ]`           Jump to next mark
+""  [`           Jump to prev mark
+""  ]'           Jump to start of next line containing a mark
+""  ['           Jump to start of prev line containing a mark
+""  `]           Jump by alphabetical order to next mark
+""  `[           Jump by alphabetical order to prev mark
+""  ']           Jump by alphabetical order to start of next line having a mark
+""  '[           Jump by alphabetical order to start of prev line having a mark
+""  m/           Open location list and display marks from current buffer
+""
+""  m[0-9]       Toggle the corresponding marker !@#$%^&*()
+""  m<S-[0-9]>   Remove all markers of the same type
+""  ]-           Jump to next line having a marker of the same type
+""  [-           Jump to prev line having a marker of the same type
+""  ]=           Jump to next line having a marker of any type
+""  [=           Jump to prev line having a marker of any type
+""  m?           Open location list and display markers from current buffer
+""  m<BS>        Remove all markers
+" End of vim-signature }}}
+
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin - YCM-Generator {{{
+" https://github.com/rdnetto/YCM-Generator
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if s:is_unix
+    call dein#add('rdnetto/YCM-Generator', {
+                \ 'lazy' : 1,
+                \ 'on_source' : ['YouCompleteMe'],
+                \ 'rev' : 'stable',
+                \ })
+endif
+
+" End of YCM-Generator }}}
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin - YouCompleteMe {{{
+" https://github.com/Valloric/YouCompleteMe
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if s:is_unix
+    call dein#add('Valloric/YouCompleteMe', {
+                \ 'lazy' : 1,
+                \ 'build' : './install.py --clang-completer',
+                \ 'on_ft' : ['c', 'cpp', 'python'],
+                \ 'augroup': 'youcompletemeStart'
+                \ })
+
+    let plugin_name = 'YouCompleteMe'
+    let normalized_plugin_name = dein#get(plugin_name).normalized_name
+
+    function! s:hook_source_{normalized_plugin_name}() abort
+
+    let g:ycm_filetype_whitelist = { 'c': 1, 'cpp': 1, 'python' : 1 }
+    let g:ycm_confirm_extra_conf = 0
+    " let g:ycm_global_ycm_extra_conf = '~/' . g:vim_cfg_dir . '/ycm_extra_conf.py'
+    let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+
+    " set shortmess+=aT
+    " set cmdheight=2
+
+    let g:ycm_complete_in_comments = 1
+    let g:ycm_min_num_of_chars_for_completion=1
+    let g:ycm_seed_identifiers_with_syntax=1
+    " let g:ycm_path_to_python_interpreter="/usr/bin/python2.7"
+    nnoremap <silent> <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+    " nnoremap  <silent> <leader>jc :silent YcmCompleter GoToDeclaration<CR>
+    nnoremap  <silent> <leader>jc :YcmCompleter GoToDeclaration<CR>
+    nnoremap   <silent> <leader>jf :YcmCompleter GoToDefinition<CR>
+    nnoremap <silent> <Leader><d> :YcmDiags<CR>
+    " nnoremap <silent> <C-o> :silent! <C-o>
+    let g:ycm_key_invoke_completion = '<C-z>'
+    let g:ycm_keep_logfiles = 1
+    " let g:ycm_log_level = 'debug'
+
+    endfunction
+    call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
+    " let g:ycm_key_list_select_completion = ['<Enter>']
+endif
+"
+" End of YouCompleteMe }}}
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin - clang_complete {{{
+" https://github.com/Rip-Rip/clang_complete
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" NeoBundle 'Rip-Rip/clang_complete' , {'build' : {'unix' : "vim clang_complete.vmb -c 'so %' -c 'q'"},'autoload' : {'filetypes' : ['c', 'cpp']}}
+" let s:bundle = neobundle#get('clang_complete')
+" function! s:bundle.hooks.on_source(bundle)
+"      let g:clang_library_path='/usr/lib/llvm-3.8/lib'
+"      " autocmd FileType c setlocal completefunc=ClangComplete
+"      " autocmd FileType cpp setlocal completefunc=ClangComplete
+"      "
+"      " autocmd FileType c setlocal omnifunc=ClangComplete
+"      " autocmd FileType cpp setlocal omnifunc=ClangComplete
+"      " let g:clang_snippets = 1
+"      let g:clang_snippets_engine = 'clang_complete'
+"      let g:clang_jumpto_back_key = "<C-Y>"
+"      let g:clang_jumpto_declaration_key = "<C-[>"
+"      inoremap <silent>  <C-z> <C-x><C-u>
+"     " nnoremap <leader>jc :g:ClangGotoDeclaration()<CR>
+"     " nnoremap <leader>jb :g:ClangGotoDeclaration()<CR>
+"      " set completeopt=menu
+"
+" endfunction
+
+
+
+" End of clang_complete }}}
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin - OmniCppComplete {{{
+" https://github.com/vim-scripts/OmniCppComplete
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" NeoBundle 'vim-scripts/OmniCppComplete' , {'autoload' : {'filetypes' : ['c', 'cpp']}}
+" let s:bundle = neobundle#get('OmniCppComplete')
+"
+" function! s:bundle.hooks.on_source(bundle)
+"     let OmniCpp_NamespaceSearch = 1
+"     let OmniCpp_GlobalScopeSearch = 1
+"     let OmniCpp_ShowAccess = 1
+"     let OmniCpp_ShowPrototypeInAbbr = 1 " 显示函数参数列表
+"     " let OmniCpp_MayCompleteDot = 1   " 输入 .  后自动补全
+"     " let OmniCpp_MayCompleteArrow = 1 " 输入 -> 后自动补全
+"     " let OmniCpp_MayCompleteScope = 1 " 输入 :: 后自动补全
+"     let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+"
+"     " " 自动关闭补全窗口
+"     " au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+"     " set completeopt=menuone,menu,longest
+" endfunction
+" End of OmniCppComplete }}}
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin - neocomplete.vim {{{
+" https://github.com/Shougo/neocomplete.vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TODO: add function param complete by TAB (like Vim script #1764)
+" if !s:is_nvim
+"     NeoBundleLazy 'Shougo/neocomplete.vim', {
+"                     \ 'depends' : 'Shougo/context_filetype.vim',
+"                     \ 'autoload' : {
+"                         \ 'insert' : 1,
+"                         \ },
+"                     \ }
+"
+"     let s:bundle = neobundle#get('neocomplete.vim')
+"     function! s:bundle.hooks.on_source(bundle)
+"         set showfulltag
+"         " TODO: The following two settings must be checked during vimprj overhaul.
+"         " Disable header files searching to improve performance.
+"         set complete-=i
+"         " Only scan current buffer
+"         set complete=.
+"
+"         " let g:neocomplete#enable_at_startup = 1
+"         let g:neocomplete#enable_smart_case = 1
+"         " let g:neocomplete#enable_auto_select = 0
+"         " Set minimum syntax keyword length.
+"         let g:neocomplete#sources#syntax#min_keyword_length = 2
+"
+"         " Define keyword.
+"         if !exists('g:neocomplete#keyword_patterns')
+"             let g:neocomplete#keyword_patterns = {}
+"         endif
+"         let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+"
+"         " <Tab>: completion.
+"         inoremap <silent> <expr> <Tab> pumvisible() ? '<C-n>' : '<Tab>'
+"         inoremap <silent> <expr> <S-Tab> pumvisible() ? '<C-p>' : '<S-Tab>'
+"
+"         " <C-h>, <BS>: close popup and delete backword char.
+"         inoremap <silent> <expr> <C-h> neocomplete#smart_close_popup() . '<C-h>'
+"         inoremap <silent> <expr> <BS> neocomplete#smart_close_popup() . '<C-h>'
+"         " Do NOT popup when enter <C-y> and <C-e>
+"         inoremap <silent> <expr> <C-y> neocomplete#close_popup() . '<C-y>'
+"         inoremap <silent> <expr> <C-e> neocomplete#cancel_popup() . '<C-e>'
+"
+"         " Enable heavy omni completion.
+"         if !exists('g:neocomplete#sources#omni#input_patterns')
+"             let g:neocomplete#sources#omni#input_patterns = {}
+"         endif
+"         if !exists('g:neocomplete#force_omni_input_patterns')
+" 		  let g:neocomplete#force_omni_input_patterns = {}
+" 		endif
+"
+"         let g:neocomplete#sources#omni#input_patterns.php =
+"                     \ '[^. \t]->\h\w*\|\h\w*::'
+"
+"         let g:neocomplete#sources#omni#input_patterns.c =
+"                     \ '[^.[:digit:] *\t]\%(\.\|->\)'
+"         let g:neocomplete#sources#omni#input_patterns.cpp =
+"                     \ '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+"         let g:neocomplete#sources#omni#input_patterns.python =
+"                      \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+"
+"     endfunction
+" endif
+"
+" End of neocomplete.vim }}}
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin - nerdcommenter {{{
+" https://github.com/scrooloose/nerdcommenter
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"call dein#add('scrooloose/nerdcommenter')
+"let plugin_name = 'nerdcommenter'
+"let normalized_plugin_name = dein#get(plugin_name).normalized_name
+
+"function! s:hook_source_{normalized_plugin_name}() abort
+
+    "" Add spaces after comment delimiters by default
+    "let g:NERDSpaceDelims = 1
+
+    "" Use compact syntax for prettified multi-line comments
+    "let g:NERDCompactSexyComs = 1
+
+    "" Align line-wise comment delimiters flush left instead of following code indentation
+    "let g:NERDDefaultAlign = 'left'
+
+    "" Set a language to use its alternate delimiters by default
+    "let g:NERDAltDelims_c = 1
+
+    "" Add your own custom formats or override the defaults
+    ""let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+    "" Allow commenting and inverting empty lines (useful when commenting a region)
+    "let g:NERDCommentEmptyLines = 1
+
+    "" Enable trimming of trailing whitespace when uncommenting
+    "let g:NERDTrimTrailingWhitespace = 1
+
+    "" If you prefer the second option then stick this line in your vimrc:
+    "let NERDCommentWholeLinesInVMode=1
+"endfunction
+
+"call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
+
+
+" End of nerdcommenter }}}
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin - vim-move {{{
+" https://github.com/matze/vim-move
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TODO: Need try this?
+" call dein#add('matze/vim-move')
+
+" End of vim-move }}}
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin - vim-visualstar {{{
+" https://github.com/thinca/vim-visualstar
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" TODO: Need a try?
+" NeoBundle 'thinca/vim-visualstar'
+
+" End of vim-visualstar }}}
+
 " """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " " Plugin - xptemplate {{{
 " " https://github.com/drmingdrmer/xptemplate
@@ -2036,41 +2137,6 @@ call dein#add('sukima/xmledit', {
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin - vim-signature {{{
-" https://github.com/kshenoy/vim-signature
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" TODO: Need a try.
-call dein#add('kshenoy/vim-signature')
-
-""  mx           Toggle mark 'x' and display it in the leftmost column
-""  dmx          Remove mark 'x' where x is a-zA-Z
-""
-""  m,           Place the next available mark
-""  m.           If no mark on line, place the next available mark. Otherwise, remove (first) existing mark.
-""  m-           Delete all marks from the current line
-""  m<Space>     Delete all marks from the current buffer
-""  ]`           Jump to next mark
-""  [`           Jump to prev mark
-""  ]'           Jump to start of next line containing a mark
-""  ['           Jump to start of prev line containing a mark
-""  `]           Jump by alphabetical order to next mark
-""  `[           Jump by alphabetical order to prev mark
-""  ']           Jump by alphabetical order to start of next line having a mark
-""  '[           Jump by alphabetical order to start of prev line having a mark
-""  m/           Open location list and display marks from current buffer
-""
-""  m[0-9]       Toggle the corresponding marker !@#$%^&*()
-""  m<S-[0-9]>   Remove all markers of the same type
-""  ]-           Jump to next line having a marker of the same type
-""  [-           Jump to prev line having a marker of the same type
-""  ]=           Jump to next line having a marker of any type
-""  [=           Jump to prev line having a marker of any type
-""  m?           Open location list and display markers from current buffer
-""  m<BS>        Remove all markers
-" End of vim-signature }}}
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin - YankRing {{{
 " https://github.com/vim-scripts/YankRing.vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -2079,21 +2145,6 @@ call dein#add('kshenoy/vim-signature')
 " NeoBundle 'YankRing.vim'
 
 " End of YankRing }}}
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin - YCM-Generator {{{
-" https://github.com/rdnetto/YCM-Generator
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if s:is_unix
-    call dein#add('rdnetto/YCM-Generator', {
-                \ 'lazy' : 1,
-                \ 'on_source' : ['YouCompleteMe'],
-                \ 'rev' : 'stable',
-                \ })
-endif
-
-" End of YCM-Generator }}}
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -2159,53 +2210,6 @@ endif
 " endfunction
 " call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
 " End of fzf }}}
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin - YouCompleteMe {{{
-" https://github.com/Valloric/YouCompleteMe
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if s:is_unix
-    call dein#add('Valloric/YouCompleteMe', {
-                \ 'lazy' : 1,
-                \ 'build' : './install.py --clang-completer',
-                \ 'on_ft' : ['c', 'cpp', 'python'],
-                \ 'augroup': 'youcompletemeStart'
-                \ })
-
-    let plugin_name = 'YouCompleteMe'
-    let normalized_plugin_name = dein#get(plugin_name).normalized_name
-
-    function! s:hook_source_{normalized_plugin_name}() abort
-
-    let g:ycm_filetype_whitelist = { 'c': 1, 'cpp': 1, 'python' : 1 }
-    let g:ycm_confirm_extra_conf = 0
-    " let g:ycm_global_ycm_extra_conf = '~/' . g:vim_cfg_dir . '/ycm_extra_conf.py'
-    let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
-
-    " set shortmess+=aT
-    " set cmdheight=2
-
-    let g:ycm_complete_in_comments = 1
-    let g:ycm_min_num_of_chars_for_completion=1
-    let g:ycm_seed_identifiers_with_syntax=1
-    " let g:ycm_path_to_python_interpreter="/usr/bin/python2.7"
-    nnoremap <silent> <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    " nnoremap  <silent> <leader>jc :silent YcmCompleter GoToDeclaration<CR>
-    nnoremap  <silent> <leader>jc :YcmCompleter GoToDeclaration<CR>
-    nnoremap   <silent> <leader>jf :YcmCompleter GoToDefinition<CR>
-    nnoremap <silent> <Leader><d> :YcmDiags<CR>
-    " nnoremap <silent> <C-o> :silent! <C-o>
-    let g:ycm_key_invoke_completion = '<C-z>'
-    let g:ycm_keep_logfiles = 1
-    " let g:ycm_log_level = 'debug'
-
-    endfunction
-    call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
-    " let g:ycm_key_list_select_completion = ['<Enter>']
-endif
-"
-" End of YouCompleteMe }}}
 
 
 " Call this finally, since use neobundle#begin()
