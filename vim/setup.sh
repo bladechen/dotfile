@@ -44,7 +44,7 @@ ln -s $CUR .vimrc
 for ((i=1;i<5;i++))
 do
     $HOME/vim80/bin/vim +'call dein#update()' +qall
-    if [ -d ~/.vim/bundle//repos//github.com//Valloric/YouCompleteMe/ ]
+    if [ -d ~/.vim/bundle//repos//github.com/bladechen/ ]
     then
         break
     fi

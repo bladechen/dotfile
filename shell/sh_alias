@@ -79,5 +79,12 @@ if [ "$?" = "0" ]
 then
 alias sshaws="ssh ubuntu@`aws ec2 describe-instances --instance-ids i-098237bf88c58c6a5 | grep amazonaws | awk -F ':' '{print $2}' | sed 's/[\",]//g'|sed 's/ //g'|head -1`"
 fi
+
+
+# export USE_YCM=1
+# if echo $HOME | grep -q "import" 2>/dev/null
+# then
+#     export USE_YCM=0
+# fi
 # alias sshaws="ssh $aws_host"
 
