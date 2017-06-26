@@ -395,6 +395,36 @@ nnoremap <silent> <C-i> <C-i>zz
 " Replace all matched items in the same line.
 set gdefault
 
+" function provide replacing single file and all the files in the proj
+" target directory to replaced, **/*.cpp means replace all the cpp files
+" recursively
+" confirm or not
+" whether wholeword
+" replaced string
+function! Replace(target_dir, confirm, wholeword, replace)
+    wa
+    let flag = ''
+    if a:confirm
+        let flag .= 'ec'
+    else
+        let flag .= 'e'
+    endif
+    let search = ''
+    if a:wholeword
+        let search .= '\<' . escape(expand('<cword>'), '/\.*$^~[') . '\>'
+    else
+        let search .= expand('<cword>')
+    endif
+    let replace = escape(a:replace, '/\&~')
+    execute 'args '.a:target_dir
+    execute 'argdo %s/' . search . '/' . replace . '/' . flag . '| update'
+endfunction
+
+
+" TODO use https://stackoverflow.com/questions/3213657/vim-how-to-pass-arguments-to-functions-from-user-commands
+" cont -> command! -nargs=* MyReplace call s:Replace(<f-args>)
+nnoremap <silent> <buffer> <Leader>r :call Replace(input('Target: '), input('Confirm [0/1]: '), input('Whole word[0/1]: '),  input('Replace '.expand('<cword>').' with: ')) <CR>
+
 " Find buffer more friendly
 set switchbuf=usetab
 
@@ -954,6 +984,7 @@ function! s:hook_source_{normalized_plugin_name}() abort
 endfunction
 
 call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
+
 " End of DoxygenToolkit.vim }}}
 
 
@@ -975,8 +1006,6 @@ endfunction
 
 call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
 
-
-
 " End of emmet-vim }}}
 
 
@@ -992,6 +1021,31 @@ call dein#add('mbbill/fencview', {
 
 
 " End of FencView.vim }}}
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin - vim-protodef{{{
+" https://github.com/derekwyatt/vim-protodef
+" auto generate implementation from prototype in *.h
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+call dein#add('derekwyatt/vim-protodef', {
+            \ 'lazy' : 1,
+            \ 'on_map': ['<Leader>PP', '<Leader>PN'],
+            \ 'depends': 'vim-fswitch',
+            \ 'on_ft' : ['c', 'cpp']
+            \ })
+
+let plugin_name = 'vim-protodef'
+let normalized_plugin_name = dein#get(plugin_name).normalized_name
+
+function! s:hook_source_{normalized_plugin_name}() abort
+    " let g:disable_protodef_mapping = 1
+    " nmap <buffer> <silent> <leader>x :call protodef#ReturnSkeletonsFromPrototypesForCurrentBuffer({'includeNS' : 0})<cr>
+endfunction
+
+call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
+
+" End of vim-protodef }}}
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1016,8 +1070,6 @@ function! s:hook_source_{normalized_plugin_name}() abort
 endfunction
 
 call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
-
-
 
 " End of FSwitch }}}
 
@@ -1635,15 +1687,15 @@ silent! colorscheme molokai
 " TOOD: make it work!
 call dein#add('Lokaltog/vim-easymotion', {
             \ 'lazy' : 1,
-            \ 'on_map' : '<Leader>n',
+            \ 'on_map' : '<Leader><Leader>'
             \ })
 
 let plugin_name = 'vim-easymotion'
 let normalized_plugin_name = dein#get(plugin_name).normalized_name
 
 function! s:hook_source_{normalized_plugin_name}() abort
-    nmap <silent> <Leader>n <Plug>(easymotion-prefix)
-    vmap <silent> <Leader>n <Plug>(easymotion-prefix)
+    nmap <silent> <Leader><Leader> <Plug>(easymotion-prefix)
+    vmap <silent> <Leader><Leader> <Plug>(easymotion-prefix)
 endfunction
 
 call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
@@ -1672,7 +1724,9 @@ call dein#add('tpope/vim-fugitive', {
 
 " only works in local machine.
 if s:is_mac
-    call dein#add('suan/vim-instant-markdown')
+    call dein#add('suan/vim-instant-markdown', {
+                on_ft: 'md'
+                \})
 endif
 
 " End of vim-instant-markdown }}}
@@ -2157,8 +2211,6 @@ endif
 " Call this finally, since use neobundle#begin()
 call dein#end()
 filetype plugin indent on
-
-
 
 " vim: set et sw=4 ts=4 fdm=marker ff=unix:
 
