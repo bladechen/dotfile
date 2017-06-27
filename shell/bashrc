@@ -3,10 +3,14 @@
 # for examples
 
 # If not running interactively, don't do anything
+if [ $ENV_INSTALL -eq 0 ]
+then
+
 case $- in
     *i*) ;;
       *) return;;
 esac
+fi
 
 complete -c sudo
 complete -c man
