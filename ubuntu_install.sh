@@ -89,8 +89,14 @@ cd ./shell/
 bash ./setup.sh
 cd -
 
-source ~/.bashrc
-export PATH=$HOME/vim80/bin:$PATH
+if echo $0 | grep -q "zsh" 2>/dev/null
+then
+    . ~/.zshrc
+else
+    . ~/.bashrc
+fi
+# export PATH=$HOME/vim80/bin:$PATH
+
 
 
 
@@ -129,4 +135,3 @@ else
 fi
 cd ~
 echo "env installation complete!"
-zsh

@@ -51,7 +51,7 @@ do
 done
 
 
-cd ~/.vim/bundle//repos//github.com//Valloric/YouCompleteMe/
+cd ~/.vim/bundle//repos//github.com//Valloric/YouCompleteMe/ 2>/dev/null || true
 ycm_install=`find . -name "ycm_core.so"|wc -l`
 if [ "$ycm_install" == "" ]
 then
