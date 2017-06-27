@@ -1,7 +1,7 @@
 #!/bin/sh
 
 set -x
-
+mkdir -p ~/tmp
 mkdir -p ~/.ssh
 chmod 0700 ~/.ssh
 mkdir -p ~/.ssh/socks
