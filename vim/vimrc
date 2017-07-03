@@ -306,6 +306,11 @@ if !(s:is_nvim && $COLORTERM == 'gnome-terminal')
     autocmd VimEnter * set visualbell t_vb=
 endif
 
+
+" select the original yanked text with gv,  select last paste in visual mode
+" with gb
+nnoremap <expr> gb '`[' . strpart(getregtype(), 0, 1) . '`]'
+
 " remap Y to work properly
 nnoremap <silent> Y y$
 
@@ -2236,6 +2241,7 @@ endif
 " Call this finally, since use neobundle#begin()
 call dein#end()
 filetype plugin indent on
+nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
 
 set tags+=$HOME/stdcpp.tags
 " vim: set et sw=4 ts=4 fdm=marker ff=unix:
