@@ -89,7 +89,7 @@ cd ./shell/
 bash ./setup.sh
 cd -
 
-if echo $0 | grep -q "zsh" 2>/dev/null
+if echo $SHELL | grep -q "zsh" 2>/dev/null
 then
     . ~/.zshrc
 else
