@@ -1,7 +1,7 @@
 #!/bin/sh
 
 set -x
-
+mkdir -p ~/tmp
 mkdir -p ~/.ssh
 chmod 0700 ~/.ssh
 mkdir -p ~/.ssh/socks
@@ -88,13 +88,26 @@ fi
 cd ./shell/
 bash ./setup.sh
 cd -
+#
+# <<<<<<< HEAD
+# if echo $SHELL | grep -q "zsh" 2>/dev/null
+# then
+#     . ~/.zshrc
+# else
+#     . ~/.bashrc
+# fi
+# =======
+#
+export ENV_INSTALL=1
+. ~/dotfile/shell/sh_alias
+#if echo $SHELL | grep -q "zsh" 2>/dev/null
+#then
+#    . ~/.zshrc
+#else
+#    . ~/.bashrc
+#fi
 
-if echo $SHELL | grep -q "zsh" 2>/dev/null
-then
-    . ~/.zshrc
-else
-    . ~/.bashrc
-fi
+>>>>>>> 932107ae55b36a10bd62ab48a37071d9d02b0910
 # export PATH=$HOME/vim80/bin:$PATH
 
 
@@ -115,7 +128,7 @@ cd ./git/
 bash setup.sh
 cd -
 
-if [ ! -f ~/local/PathPicker ]
+if [ ! -d ~/local/PathPicker ]
 then
     cd ~/local/
     git clone https://github.com/facebook/PathPicker.git
@@ -126,7 +139,7 @@ else
     git pull
 fi
 
-if [ ! -f ~/.fzf ]
+if [ ! -d ~/.fzf ]
 then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     ~/.fzf/install --all --no-update-rc
@@ -134,4 +147,5 @@ else
     cd ~/.fzf && git pull && ./install
 fi
 cd ~
+export ENV_INSTALL=0
 echo "env installation complete!"
