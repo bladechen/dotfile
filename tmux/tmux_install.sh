@@ -7,14 +7,14 @@
 # exit on error
 set -e
 
-TMUX_VERSION=2.4
+TMUX_VERSION=2.5
 
 # create our directories
 mkdir -p $HOME/local $HOME/tmux_tmp
 cd $HOME/tmux_tmp
 
 # download source files for tmux, libevent, and ncurses
-wget -O tmux-${TMUX_VERSION}.tar.gz https://github.com/tmux/tmux/releases/download/2.4/tmux-2.4.tar.gz 1>/dev/null 2>&1
+wget -O tmux-${TMUX_VERSION}.tar.gz https://github.com/tmux/tmux/releases/download/2.5/tmux-2.5.tar.gz 1>/dev/null 2>&1
 # wget https://github.com/downloads/libevent/libevent/libevent-2.0.19-stable.tar.gz --no-check-certificate
 wget https://github.com/libevent/libevent/releases/download/release-2.1.8-stable/libevent-2.1.8-stable.tar.gz --no-check-certificate 1>/dev/null 2>&1
 
