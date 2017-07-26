@@ -88,8 +88,16 @@ fi
 cd ./shell/
 bash ./setup.sh
 cd -
-
-
+#
+# <<<<<<< HEAD
+# if echo $SHELL | grep -q "zsh" 2>/dev/null
+# then
+#     . ~/.zshrc
+# else
+#     . ~/.bashrc
+# fi
+# =======
+#
 export ENV_INSTALL=1
 . ~/dotfile/shell/sh_alias
 #if echo $SHELL | grep -q "zsh" 2>/dev/null
@@ -99,6 +107,7 @@ export ENV_INSTALL=1
 #    . ~/.bashrc
 #fi
 
+>>>>>>> 932107ae55b36a10bd62ab48a37071d9d02b0910
 # export PATH=$HOME/vim80/bin:$PATH
 
 
