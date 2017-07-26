@@ -36,7 +36,6 @@ endif
 
 " End of Check Prerequisite }}}
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Init {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -300,6 +299,13 @@ inoremap <silent> <3-MiddleMouse> <Nop>
 noremap <silent> <4-MiddleMouse> <Nop>
 inoremap <silent> <4-MiddleMouse> <Nop>
 
+
+" use upper Q for recording
+nnoremap Q q
+nnoremap q <Nop>
+
+
+
 " Disable bell on errors except for neovim on gnome-terminal, since
 " gnone-terminal can not handle 'visualbell' properly.
 if !(s:is_nvim && $COLORTERM == 'gnome-terminal')
@@ -369,7 +375,7 @@ command! -complete=file -nargs=+ TabSwitch call s:TabSwitch(<q-args>)
 
 vnoremap <silent> <leader>y :<CR>:let @a=@" \| execute "normal! vgvy" \| let res=system("pbcopy", @") \| let @"=@a<CR>
 nmap <silent> <leader>p :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
-nmap <silent> <leader>ip :set invpaste<CR>
+" nmap <silent> <leader>ip :set invpaste<CR>
 
 cnoremap w!! :silent w !sudo tee % > /dev/null  <CR>
 
@@ -445,7 +451,7 @@ nnoremap <silent> gf <C-w>gf
 nnoremap <silent> gF <C-w>gF
 
 " Quick moving between tabs
-nnoremap <silent> <C-Tab> gt
+" nnoremap <silent> <C-Tab> gt
 
 " Quick moving between windows
 nnoremap <silent> <Leader>w <C-w>w
@@ -504,8 +510,9 @@ set wildignore+=*.exe
 set wildignore+=*.swp
 set wildignore+=*.pyc
 
-nmap <silent> <Tab> %
-nmap <silent> <S-Tab> g%
+" nmap <silent> <Tab> %
+" nmap <silent> <S-Tab> g%
+" nnoremap <Leader>i <C-I>
 
 " Enable very magic mode for searching.
 noremap / /\v
@@ -763,6 +770,7 @@ autocmd FileType help setlocal readonly nomodifiable number
 " End of help }}}
 
 
+autocmd FileType qf nnoremap <buffer> <silent> q :q<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Language - HTML {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1199,7 +1207,7 @@ let plugin_name = 'SyntaxAttr.vim'
 let normalized_plugin_name = dein#get(plugin_name).normalized_name
 
 function! s:hook_source_{normalized_plugin_name}() abort
-    nnoremap <silent> <Leader>S :call SyntaxAttr()<CR>
+        nnoremap <silent> <Leader>S :call SyntaxAttr()<CR>
 endfunction
 
 call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
@@ -1207,6 +1215,79 @@ call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . norma
 
 
 " End of SyntaxAttr.vim }}}
+
+call dein#add('mileszs/ack.vim')
+call dein#add('tpope/vim-dispatch')
+call dein#add('devjoe/vim-codequery', {
+            \ 'lazy' : 1,
+            \ 'depends' : ['ack.vim', 'vim-dispatch', 'unite.vim'],
+            \ 'on_map': '<Leader>c'
+            \ })
+
+            "\ 'on_map' : '<Leader>S',
+let plugin_name = 'vim-codequery'
+let normalized_plugin_name = dein#get(plugin_name).normalized_name
+
+function! s:hook_source_{normalized_plugin_name}() abort
+    " Trigger db building (in current filetype) when your query fails
+    let g:codequery_trigger_build_db_when_db_not_found = 1
+
+    nmap <silent> <Leader>c :CodeQuery Symbol<CR>
+
+    " Custom your `CodeQuery Text` commands
+    let g:codequery_find_text_cmd = 'Ack! --type-set=cc:ext:c,h,cc,cxx,cpp,i,m,s,S --cc --cpp --cmake --make --yaml'
+
+    let g:codequery_find_text_from_current_file_dir = 0
+    " 0 => search from project dir (git root directory -> then the directory containing xxx.db file)
+    " 1 => search from the directory containing current file
+
+    " If you use ':CodeQuery Symbol' in a txt file, of course, it will fail due to wrong filetype.
+    " With the following option set to 1, ':CodeQuery Text' will be automatically sent when your query fails.
+    let g:codequery_auto_switch_to_find_text_for_wrong_filetype = 0
+
+endfunction
+
+call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin - cscope.vim {{{
+" https://github.com/brookhong/cscope.vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+
+call dein#add('brookhong/cscope.vim', {'on_ft': ['c', 'cpp'], 'lazy' : 1})
+
+let plugin_name = 'cscope.vim'
+
+let normalized_plugin_name = dein#get(plugin_name).normalized_name
+
+function! s:hook_source_{normalized_plugin_name}() abort
+
+    nnoremap <leader>csi :call CscopeFindInteractive(expand('<cword>'))<CR>
+    nnoremap <leader>csl :call ToggleLocationList()<CR>
+
+    let g:cscope_interested_files = '\.c$\|\.cpp$\|\.h$\|\.hpp$\|\.i$\|\.s$\|\.S'
+    " let g:cscope_ignored_dir = 'build$'
+
+
+    " s: Find this C symbol
+    nnoremap  <leader>cs :call CscopeFind('s', expand('<cword>'))<CR>
+    " g: Find this definition
+    nnoremap <leader>cd :call CscopeFind('g', expand('<cword>'))<CR>
+    " e: Find this egrep pattern
+    nnoremap  <leader>ce :call CscopeFind('e', expand('<cword>'))<CR>
+    " f: Find this file
+    nnoremap  <leader>cf :call CscopeFind('f', expand('<cword>'))<CR>
+    " i: Find files #including this file
+    nnoremap  <leader>ci :call CscopeFind('i', expand('<cword>'))<CR>
+
+endfunction
+
+call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
+
+" End of cscope.vim }}}
+
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1216,14 +1297,14 @@ call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . norma
 " http://ctags.sourceforge.net/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set tags=./tags;,tags;
-call dein#add('bladechen/autotag')
+call dein#add('bladechen/autotag', {'lazy': 1, 'on_func': 'AutoTag'})
 
 let plugin_name = 'autotag'
 let normalized_plugin_name = dein#get(plugin_name).normalized_name
 
 function! s:hook_source_{normalized_plugin_name}() abort
     let g:autotagTagsFile="tags"
-
+    let g:autotagmaxTagsFileSize=1000000000
 endfunction
 
 call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
@@ -1300,7 +1381,7 @@ call dein#add('Shougo/unite.vim', {
             \ 'lazy' : 1,
             \ 'on_map' : '<Leader>',
             \ 'on_cmd' : ['Unite', 'Grep'],
-            \ 'on_source' : 'vimfiler.vim',
+            \ 'on_source' : ['vimfiler.vim', 'vim-codequery'],
             \ })
 
 let plugin_name = 'unite.vim'
@@ -1571,7 +1652,8 @@ call dein#add('tpope/vim-fugitive', {
 " only works in local machine.
 if s:is_mac
     call dein#add('suan/vim-instant-markdown', {
-                \on_ft: 'md'
+                \'on_ft': 'md',
+                \'lazy': 1
                 \})
 endif
 
@@ -1988,6 +2070,8 @@ endif
 
 
 " backup_plugin {{{
+
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin - neocomplete.vim {{{
