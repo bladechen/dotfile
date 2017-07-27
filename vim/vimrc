@@ -766,11 +766,11 @@ autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType help nnoremap <buffer> <silent> q :q<CR>
 autocmd FileType help setlocal readonly nomodifiable number
 
+autocmd FileType qf nnoremap <buffer> <silent> q :q<CR>
 
 " End of help }}}
 
 
-autocmd FileType qf nnoremap <buffer> <silent> q :q<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Language - HTML {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1297,7 +1297,7 @@ call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . norma
 " http://ctags.sourceforge.net/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set tags=./tags;,tags;
-call dein#add('bladechen/autotag', {'lazy': 1, 'on_func': 'AutoTag'})
+call dein#add('bladechen/autotag', {'lazy': 1, 'on_ft': ['python', 'c', 'cpp']})
 
 let plugin_name = 'autotag'
 let normalized_plugin_name = dein#get(plugin_name).normalized_name
