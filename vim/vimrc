@@ -2009,14 +2009,20 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 if !s:use_ycm
-call dein#add('Rip-Rip/clang_complete' , {'build' :  "vim clang_complete.vmb -c 'so %' -c 'q'", 'on_ft': ['c', 'cpp']})
+call dein#add('Rip-Rip/clang_complete' , {'build' :  "vim clang_complete.vmb -c 'so %' -c 'q'", 'on_ft': ['c', 'cpp'], 'lazy' : 1})
 
 let plugin_name = 'clang_complete'
 let normalized_plugin_name = dein#get(plugin_name).normalized_name
 
 function! s:hook_source_{normalized_plugin_name}() abort
 
-    let g:clang_library_path='/usr/lib/llvm-3.8/lib'
+    " let g:clang_complete_optional_args_in_snippets = 1
+    let g:clang_use_library = 1
+    let g:clang_trailing_placeholder  = 1
+    " let g:clang_library_path = '/usr/lib/llvm-4.0/lib/'
+    let g:clang_complete_macros = 1
+    " let g:clang_library_path='/usr/lib/llvm-4.0/lib'
+    " let g:clang_library_path='/usr/lib/llvm-4.0/lib/libclang-4.0.so.1'
     " autocmd FileType c setlocal completefunc=ClangComplete
     " autocmd FileType cpp setlocal completefunc=ClangComplete
     "
@@ -2027,11 +2033,14 @@ function! s:hook_source_{normalized_plugin_name}() abort
     let g:clang_jumpto_back_key = "<C-Y>"
     let g:clang_jumpto_declaration_key = "<C-[>"
     inoremap <silent>  <C-z> <C-x><C-u>
+    let g:clang_omnicppcomplete_compliance = 1
+    let g:clang_snippets = 1
     " nnoremap <leader>jc :g:ClangGotoDeclaration()<CR>
     " nnoremap <leader>jb :g:ClangGotoDeclaration()<CR>
     " set completeopt=menu
 
 endfunction
+call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
 endif
 
 
@@ -2065,6 +2074,7 @@ function! s:hook_source_{normalized_plugin_name}() abort
     " au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
     " set completeopt=menuone,menu,longest
 endfunction
+    call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
 endif
 " End of OmniCppComplete }}}
 

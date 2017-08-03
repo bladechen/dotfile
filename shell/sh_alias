@@ -87,7 +87,20 @@ then
     export USE_YCM=0
 fi
 
+USE_YCM=0
+
+export PATH=/home/cs9242/bin:$PATH
 export PATH=$PATH:/home/cs9242/crossdev/arm-2013.05/bin
 export PYTHONPATH=$PYTHONPATH:/home/cs9242/bin/py
+reset_eth1()
+{
+    sudo ifdown eth1
+    sudo ifup eth1
+}
+kill_qemu()
+{
+
+    ps -ef| grep qemu|awk '{print $2}'|xargs kill -9
+}
 # alias sshaws="ssh $aws_host"
 
