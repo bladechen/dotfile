@@ -146,5 +146,6 @@ else
     cd ~/.fzf && git pull && ./install --no-update-rc --all
 fi
 cd ~
+curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash
 export ENV_INSTALL=0
 echo "env installation complete!"
