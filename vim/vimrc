@@ -2033,12 +2033,12 @@ function! s:hook_source_{normalized_plugin_name}() abort
     " autocmd FileType cpp setlocal omnifunc=ClangComplete
     " let g:clang_snippets = 1
     let g:clang_snippets_engine = 'clang_complete'
-    let g:clang_jumpto_back_key = "<C-Y>"
-    let g:clang_jumpto_declaration_key = "<C-[>"
+    " let g:clang_jumpto_back_key = "<C-Y>"
+    " let g:clang_jumpto_declaration_key = "<C-[>"
     inoremap <silent>  <C-z> <C-x><C-u>
     let g:clang_omnicppcomplete_compliance = 1
     let g:clang_snippets = 1
-    " nnoremap <leader>jc :g:ClangGotoDeclaration()<CR>
+    nnoremap <leader>jc :call g:ClangGotoDeclaration()<CR>
     " nnoremap <leader>jb :g:ClangGotoDeclaration()<CR>
     " set completeopt=menu
 
