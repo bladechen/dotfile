@@ -88,7 +88,6 @@ then
     export USE_YCM=0
 fi
 
-USE_YCM=0
 
 export PATH=/home/cs9242/bin:$PATH
 export PATH=$PATH:/home/cs9242/crossdev/arm-2013.05/bin
