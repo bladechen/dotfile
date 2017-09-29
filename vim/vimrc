@@ -304,6 +304,8 @@ inoremap <silent> <4-MiddleMouse> <Nop>
 nnoremap Q q
 nnoremap q <Nop>
 
+" suppress C-a which is for tmux-prefix
+noremap <C-a> <Nop>
 
 
 " Disable bell on errors except for neovim on gnome-terminal, since
@@ -345,7 +347,7 @@ function! s:Preserve(command)
 endfunction
 
 function! s:RemoveTrailingSpaces()
-    if &filetype != 'markdown'
+    if &filetype != 'markdown' && &filetype != 'diff'
         call s:Preserve('%s/\s\+$//e')
     endif
 endfunction
@@ -2018,6 +2020,7 @@ function! s:hook_source_{normalized_plugin_name}() abort
 
     " let g:clang_complete_optional_args_in_snippets = 1
     let g:clang_use_library = 1
+    let g:clang_make_default_keymappings = 0
     let g:clang_trailing_placeholder  = 1
     " let g:clang_library_path = '/usr/lib/llvm-4.0/lib/'
     let g:clang_complete_macros = 1
@@ -2054,28 +2057,28 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
-if !s:use_ycm
-call dein#add('vim-scripts/OmniCppComplete' , {'on_ft': ['c', 'cpp']})
-" NeoBundle 'vim-scripts/OmniCppComplete' , {'autoload' : {'filetypes' : ['c', 'cpp']}}
-
-let plugin_name = 'OmniCppComplete'
-let normalized_plugin_name = dein#get(plugin_name).normalized_name
-function! s:hook_source_{normalized_plugin_name}() abort
-
-    let OmniCpp_NamespaceSearch = 1
-    let OmniCpp_GlobalScopeSearch = 1
-    let OmniCpp_ShowAccess = 1
-    let OmniCpp_ShowPrototypeInAbbr = 1 " 显示函数参数列表
-    " let OmniCpp_MayCompleteDot = 1   " 输入 .  后自动补全
-    " let OmniCpp_MayCompleteArrow = 1 " 输入 -> 后自动补全
-    " let OmniCpp_MayCompleteScope = 1 " 输入 :: 后自动补全
-    let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-    " " 自动关闭补全窗口
-    " au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-    " set completeopt=menuone,menu,longest
-endfunction
-    call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
-endif
+" if !s:use_ycm
+" call dein#add('vim-scripts/OmniCppComplete' , {'on_ft': ['c', 'cpp']})
+" " NeoBundle 'vim-scripts/OmniCppComplete' , {'autoload' : {'filetypes' : ['c', 'cpp']}}
+"
+" let plugin_name = 'OmniCppComplete'
+" let normalized_plugin_name = dein#get(plugin_name).normalized_name
+" function! s:hook_source_{normalized_plugin_name}() abort
+"
+"     let OmniCpp_NamespaceSearch = 1
+"     let OmniCpp_GlobalScopeSearch = 1
+"     let OmniCpp_ShowAccess = 1
+"     let OmniCpp_ShowPrototypeInAbbr = 1 " 显示函数参数列表
+"     " let OmniCpp_MayCompleteDot = 1   " 输入 .  后自动补全
+"     " let OmniCpp_MayCompleteArrow = 1 " 输入 -> 后自动补全
+"     " let OmniCpp_MayCompleteScope = 1 " 输入 :: 后自动补全
+"     let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+"     " " 自动关闭补全窗口
+"     " au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+"     " set completeopt=menuone,menu,longest
+" endfunction
+" call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
+" endif
 " End of OmniCppComplete }}}
 
 
