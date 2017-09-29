@@ -143,7 +143,7 @@ then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     ~/.fzf/install --all --no-update-rc
 else
-    cd ~/.fzf && git pull && ./install
+    cd ~/.fzf && git pull && ./install --no-update-rc
 fi
 cd ~
 export ENV_INSTALL=0
