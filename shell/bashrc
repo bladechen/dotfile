@@ -97,6 +97,11 @@ if [ -f ~/dotfile/shell/sh_alias ]; then
     . ~/dotfile/shell/sh_alias
 fi
 
+if [ -f ~/dotfile/shell/git_alias ]; then
+    . ~/dotfile/shell/git_alias
+fi
+
+
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
@@ -141,4 +146,7 @@ export SHELL=$BASH_SHELL
 echo 'start bash successfully!'
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
 

@@ -1,7 +1,7 @@
 #!/bin/sh
 if [[ ! -d ~/.oh-my-zsh ]]; then
     echo "Install oh-my-zsh ..."
-    git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh 1>/dev/null
+    git clone https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh 1>/dev/null
     cp ~/.zshrc ~/.zshrc.orig 2>/dev/null || true
     cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
     # sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
