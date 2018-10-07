@@ -3,9 +3,9 @@
 # for examples
 
 # If not running interactively, don't do anything
+
 if [ "$ENV_INSTALL" == "0" ]
 then
-
 case $- in
     *i*) ;;
       *) return;;
