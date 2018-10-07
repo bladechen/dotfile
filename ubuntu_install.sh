@@ -44,9 +44,20 @@ sudo -H pip install --upgrade pip 1>/dev/null
 
 
 
-sudo -H pip install pwn 1>/dev/null
+#sudo -H pip install pwn 1>/dev/null
 
 
+sudo apt-get -y install g++ git cmake sqlite3 libsqlite3-dev  cscope exuberant-ctags codequery
+
+
+#cd ~/tmp/
+#git clone https://github.com/ruben2020/codequery.git
+#cd codequery
+#mkdir build
+#cd build
+#cmake -G "Unix Makefiles" -DNO_GUI=ON ..
+#make
+#sudo make install
 
 sudo apt-get install htop tig mycli jq -y 1>/dev/null
 sudo -H pip install cheat 1>/dev/null
@@ -85,7 +96,7 @@ then
 fi
 
 
-cd ./shell/
+cd $HOME/dotfile/shell/
 bash ./setup.sh
 cd -
 #
@@ -143,8 +154,9 @@ then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     ~/.fzf/install --all --no-update-rc
 else
-    cd ~/.fzf && git pull && ./install
+    cd ~/.fzf && git pull && ./install --no-update-rc --all
 fi
 cd ~
+curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash
 export ENV_INSTALL=0
 echo "env installation complete!"

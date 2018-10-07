@@ -61,9 +61,12 @@ alias la='ls -lA'
 alias l='ls -CF'
 
 alias vi='vim'
-alias ctags='ctags -R --sort=yes --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+liasS --extra=+q .'
+alias ctags='ctags -R --sort=yes --c++-kinds=+xp --fields=+KliasS --extra=+q .'
+# ctags  -R --links=no --languages=C,C++ --langmap=C:.c.h --langmap=C++:.C.h.c.cpp.hpp.c++.cc.cp.cxx.h++.hh.hp.hxx  --sort=yes --c++-kinds=+px --fields=+liasSK --extra=+q  -R ./
+# alias ctags='ctags -R --sort=yes --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+liasS --extra=+q .'
 alias tmux='TERM=screen-256color-bce tmux -S $TMPDIR/tmux_session'
 alias os161-objdump='os161-objdump -mmips:isa32 '
+alias gitdfw='git diff --ignore-space-change'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -80,6 +83,9 @@ then
 alias sshaws="ssh ubuntu@`aws ec2 describe-instances --instance-ids i-098237bf88c58c6a5 | grep amazonaws | awk -F ':' '{print $2}' | sed 's/[\",]//g'|sed 's/ //g'|head -1`"
 fi
 
+alias memleak_check="valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all -v --trace-children=yes --track-origins=yes "
+alias memusage_check="valgrind --tool=massif --pages-as-heap=yes --massif-out-file=massif.out "
+
 
 export USE_YCM=1
 if echo $HOME | grep -q "import" 2>/dev/null
@@ -87,7 +93,6 @@ then
     export USE_YCM=0
 fi
 
-USE_YCM=0
 
 export PATH=/home/cs9242/bin:$PATH
 export PATH=$PATH:/home/cs9242/crossdev/arm-2013.05/bin

@@ -1,0 +1,20 @@
+# https://dev.to/robertcoopercode/using-aliases-to-speed-up-your-git-workflow-2f5a
+alias gdno="git diff --name-only"
+alias gd="git diff"
+alias gcm="git commit -m"
+alias gaa="git add -A"
+alias gca="git commit --amend --no-edit"
+alias gcaa="git add --all && git commit --amend --no-edit"
+alias gnope="git checkout ."
+alias gwait="git reset HEAD"
+alias gundo="git reset --soft HEAD^"
+alias gl="git log --graph --pretty='\''%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'\'' --abbrev-commit"
+alias gco="git checkout"
+alias gps="git push"
+alias gpsf="git push --force-with-lease"
+alias gpl="git pull --rebase"
+alias grb="git rebase"
+grn() { git rebase -i HEAD~"$1"; }
+grbic() { git rebase -i "$1" ; }
+alias grba="git rebase --abort"
+alias grbc="git rebase --continue"
