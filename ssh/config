@@ -4,7 +4,7 @@ Host github.com
   Port 443
 
 Host aws_us
-    Hostname 34.215.187.19
+    Hostname 52.37.165.162
     Port 22
     User ubuntu
     IdentityFile ~/.ssh/id_rsa
@@ -15,16 +15,10 @@ Host dev_vm
     User ubuntu
     IdentityFile ~/.ssh/id_rsa
 
-Host aws_seoul
-    Hostname 52.78.13.223
-    Port 22
-    User ubuntu
-    IdentityFile ~/.ssh/id_rsa
-
 Host google_tw
-    Hostname 35.194.230.240
+    Hostname 35.222.141.115
     Port 22
-    User 475979248
+    User root
     IdentityFile ~/.ssh/id_rsa
 
 Host unsw
