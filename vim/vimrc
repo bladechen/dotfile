@@ -544,9 +544,9 @@ vnoremap <silent> K "ay:<C-u>tab h <C-r>a<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Formats/Style {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 set expandtab
 set smarttab
 set autoindent
@@ -585,6 +585,9 @@ set cursorline
 set laststatus=2
 
 set fileformats=unix,dos
+
+" 80 chars per line warning bar
+set colorcolumn=80
 
 " Function to insert the current date
 function! s:InsertCurrentDate()
@@ -727,7 +730,7 @@ endfunction
 
 " Setup my favorite C/C++ indent
 function! s:SetCPPIndent()
-    setlocal cinoptions=(0,t0,w1 shiftwidth=4 tabstop=4
+    setlocal cinoptions=(0,t0,w1 shiftwidth=2 tabstop=2
 endfunction
 
 " Setup basic C/C++ development envionment
@@ -760,6 +763,54 @@ autocmd FileType c,cpp call s:MapJoinWithLeaders('//\\|\\')
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 
 " End of CSS }}}
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Language - Go {{{
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" XXX install go tags first, go get -u github.com/jstemmer/gotags
+function! s:SetGoTags()
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+endfunction
+autocmd FileType go call s:SetGoTags()
+" End of Go }}}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Language - Rust {{{
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup filetypedetect
+  au BufRead,BufNewFile *.mvir set filetype=rust
+augroup END
+
+
+" End of Rust }}}
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -994,13 +1045,13 @@ function! s:hook_source_{normalized_plugin_name}() abort
     let g:DoxygenToolkit_authorName = "bladechen"
     let g:DoxygenToolkit_versionString = ""
     let g:DoxygenToolkit_versionTag = ""
-    let g:DoxygenToolkit_briefTag_pre = "@brief:  "
+    let g:DoxygenToolkit_briefTag_pre = "@brief  "
     let g:DoxygenToolkit_fileTag = "@file:   "
     let g:DoxygenToolkit_authorTag = "@author: "
     let g:DoxygenToolkit_blockTag = "@name: "
-    let g:DoxygenToolkit_paramTag_pre = "@param:  "
-    let g:DoxygenToolkit_returnTag = "@return:  "
-    let g:DoxygenToolkit_classTag = "@class: "
+    let g:DoxygenToolkit_paramTag_pre = "@param  "
+    let g:DoxygenToolkit_returnTag = "@return  "
+    let g:DoxygenToolkit_classTag = "@class "
     nnoremap <silent><Leader>o :Dox<CR>
 endfunction
 
@@ -1298,7 +1349,7 @@ call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . norma
 " forked from https://github.com/craigemery/vim-autotag
 " http://ctags.sourceforge.net/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set tags=./tags;,tags;
+set tags+=$HOME/stdcpp.tags;../tags;../../tags;./tags;
 call dein#add('bladechen/autotag', {'lazy': 1, 'on_ft': ['python', 'c', 'cpp']})
 
 let plugin_name = 'autotag'
@@ -1687,6 +1738,7 @@ call dein#add('fatih/vim-go', {
             \ 'on_ft' : 'go',
             \ })
 
+" let g:go_def_mode = 'gopls'
 " End of vim-go }}}
 
 
@@ -1965,8 +2017,8 @@ endif
 if s:is_unix && s:use_ycm
     call dein#add('Valloric/YouCompleteMe', {
                 \ 'lazy' : 1,
-                \ 'build' : './install.py --clang-completer',
-                \ 'on_ft' : ['c', 'cpp', 'python'],
+                \ 'build' : './install.py --clang-completer --go-completer',
+                \ 'on_ft' : ['c', 'cpp', 'python', 'go'],
                 \ 'augroup': 'youcompletemeStart'
                 \ })
 
@@ -1975,7 +2027,7 @@ if s:is_unix && s:use_ycm
 
     function! s:hook_source_{normalized_plugin_name}() abort
 
-    let g:ycm_filetype_whitelist = { 'c': 1, 'cpp': 1, 'python' : 1 }
+    let g:ycm_filetype_whitelist = { 'c': 1, 'cpp': 1, 'python' : 1, 'go' : 1}
     let g:ycm_confirm_extra_conf = 0
     " let g:ycm_global_ycm_extra_conf = '~/' . g:vim_cfg_dir . '/ycm_extra_conf.py'
     let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
@@ -1997,6 +2049,11 @@ if s:is_unix && s:use_ycm
     " let g:ycm_keep_logfiles = 1
     " let g:ycm_log_level = 'debug'
 
+
+    " let g:ycm_semantic_triggers =  {
+    "       \   'c' : ['->', '.'],
+    "       \   'go' : ['.'],
+    "       \   'cpp,objcpp' : ['->', '.', '::'] }
     endfunction
     call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
     " let g:ycm_key_list_select_completion = ['<Enter>']
@@ -2340,6 +2397,4 @@ call dein#end()
 filetype plugin indent on
 nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
 
-set tags+=$HOME/stdcpp.tags
-" vim: set et sw=4 ts=4 fdm=marker ff=unix:
-
+" vim: set et sw=2 ts=2 fdm=marker ff=unix:
