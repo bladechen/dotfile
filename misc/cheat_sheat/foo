@@ -1,1 +1,2 @@
-bar
+# demsg
+sysctl -w debug.exception-trace=0 or echo 0 > /proc/sys/debug/exception-trace will turn it off
