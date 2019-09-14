@@ -13,7 +13,8 @@ then
     cd ~/tmp/vim/vim
     mkdir -p $HOME/vim80/
     # ./configure --prefix=$HOME/vim81/  --with-features=huge   --enable-rubyinterp  --enable-pythoninterp       --with-python-config-dir=/usr/lib/python2.7/             --enable-perlinterp             --enable-gui=gtk2 --enable-cscope             --enable-luainterp=yes  --enable-cscope  --enable-largefile
-    ./configure --prefix=$HOME/vim80/  --with-features=huge   --enable-rubyinterp  --enable-pythoninterp                --enable-perlinterp             --enable-gui=gtk2 --enable-cscope             --enable-luainterp=yes  --enable-cscope  --enable-largefile 1>/dev/null
+    ./configure --prefix=$HOME/vim80/  --with-features=huge   --enable-rubyinterp  --enable-pythoninterp                --enable-perlinterp             --enable-gui=gtk2 --enable-cscope             --enable-luainterp=yes  --enable-cscope  --enable-largefile --with-python-command=`which python`
+
     # --with-lua-prefix=/usr/local/Cellar/lua/5.3.4_2/
 
     make 1>/dev/null
