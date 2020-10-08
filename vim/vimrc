@@ -20,19 +20,19 @@ if v:version < 800
     echohl None
 endif
 
-if !has('python')
-    echohl WarningMsg
-    echomsg 'Requires Vim compiled with "+python" to use enhanced feature.'
-    echohl None
-endif
+" if !has('python3')
+"     echohl WarningMsg
+"     echomsg 'Requires Vim compiled with "+python" to use enhanced feature.'
+"     echohl None
+" endif
 
-if !has('nvim')
-    if !has('lua')
-        echohl WarningMsg
-        echomsg 'Requires Vim compiled with "+lua" to use enhanced feature.'
-        echohl None
-    endif
-endif
+" if !has('nvim')
+"     if !has('lua')
+"         echohl WarningMsg
+"         echomsg 'Requires Vim compiled with "+lua" to use enhanced feature.'
+"         echohl None
+"     endif
+" endif
 
 " End of Check Prerequisite }}}
 
@@ -544,9 +544,9 @@ vnoremap <silent> K "ay:<C-u>tab h <C-r>a<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Formats/Style {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 set expandtab
 set smarttab
 set autoindent
@@ -704,8 +704,8 @@ let g:is_bash = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! s:GNUIndent()
     setlocal cinoptions=>4,n-2,{2,^-2,:2,=2,g0,h2,p5,t0,+2,(0,u0,w1,m1
-    setlocal shiftwidth=2
-    setlocal tabstop=8
+    setlocal shiftwidth=4
+    setlocal tabstop=4
 endfunction
 
 function! s:SetSysTags()
@@ -730,7 +730,7 @@ endfunction
 
 " Setup my favorite C/C++ indent
 function! s:SetCPPIndent()
-    setlocal cinoptions=(0,t0,w1 shiftwidth=2 tabstop=2
+    setlocal cinoptions=(0,t0,w1 shiftwidth=4 tabstop=4
 endfunction
 
 " Setup basic C/C++ development envionment
@@ -1350,17 +1350,17 @@ call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . norma
 " http://ctags.sourceforge.net/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set tags+=$HOME/stdcpp.tags;../tags;../../tags;./tags;
-call dein#add('bladechen/autotag', {'lazy': 1, 'on_ft': ['python', 'c', 'cpp']})
-
-let plugin_name = 'autotag'
-let normalized_plugin_name = dein#get(plugin_name).normalized_name
-
-function! s:hook_source_{normalized_plugin_name}() abort
-    let g:autotagTagsFile="tags"
-    let g:autotagmaxTagsFileSize=1000000000
-endfunction
-
-call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
+" call dein#add('bladechen/autotag', {'lazy': 1, 'on_ft': ['python', 'c', 'cpp']})
+"
+" let plugin_name = 'autotag'
+" let normalized_plugin_name = dein#get(plugin_name).normalized_name
+"
+" function! s:hook_source_{normalized_plugin_name}() abort
+"     let g:autotagTagsFile="tags"
+"     let g:autotagmaxTagsFileSize=1000000000
+" endfunction
+"
+" call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
 " End of tagbar }}}
 
 
@@ -2014,51 +2014,54 @@ endif
 " Plugin - YouCompleteMe {{{
 " https://github.com/Valloric/YouCompleteMe
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if s:is_unix && s:use_ycm
-    call dein#add('Valloric/YouCompleteMe', {
-                \ 'lazy' : 1,
-                \ 'build' : './install.py --clang-completer --go-completer',
-                \ 'on_ft' : ['c', 'cpp', 'python', 'go'],
-                \ 'augroup': 'youcompletemeStart'
-                \ })
+ if s:is_unix && s:use_ycm
+     call dein#add('Valloric/YouCompleteMe', {
+                 \ 'lazy' : 1,
+                 \ 'build' : './install.py --clang-completer ',
+                 \ 'on_ft' : ['c', 'cpp', 'python', 'go'],
+                 \ 'augroup': 'youcompletemeStart'
+                 \ })
 
-    let plugin_name = 'YouCompleteMe'
-    let normalized_plugin_name = dein#get(plugin_name).normalized_name
+     let plugin_name = 'YouCompleteMe'
+     let normalized_plugin_name = dein#get(plugin_name).normalized_name
 
-    function! s:hook_source_{normalized_plugin_name}() abort
+     function! s:hook_source_{normalized_plugin_name}() abort
 
-    let g:ycm_filetype_whitelist = { 'c': 1, 'cpp': 1, 'python' : 1, 'go' : 1}
-    let g:ycm_confirm_extra_conf = 0
-    " let g:ycm_global_ycm_extra_conf = '~/' . g:vim_cfg_dir . '/ycm_extra_conf.py'
-    let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+     let g:ycm_filetype_whitelist = { 'c': 1, 'cpp': 1, 'python' : 1, 'go' : 1}
+     let g:ycm_confirm_extra_conf = 0
+     " let g:ycm_global_ycm_extra_conf = '~/' . g:vim_cfg_dir . '/ycm_extra_conf.py'
+     let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
-    " set shortmess+=aT
-    " set cmdheight=2
+     " set shortmess+=aT
+     " set cmdheight=2
 
-    let g:ycm_complete_in_comments = 1
-    let g:ycm_min_num_of_chars_for_completion=1
-    let g:ycm_seed_identifiers_with_syntax=1
-    " let g:ycm_path_to_python_interpreter="/usr/bin/python2.7"
-    nnoremap <silent> <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    " nnoremap  <silent> <leader>jc :silent YcmCompleter GoToDeclaration<CR>
-    nnoremap  <silent> <leader>jc :YcmCompleter GoToDeclaration<CR>
-    nnoremap   <silent> <leader>jf :YcmCompleter GoToDefinition<CR>
-    nnoremap <silent> <Leader><d> :YcmDiags<CR>
-    " nnoremap <silent> <C-o> :silent! <C-o>
-    let g:ycm_key_invoke_completion = '<C-z>'
-    " let g:ycm_keep_logfiles = 1
-    " let g:ycm_log_level = 'debug'
+     let g:ycm_complete_in_comments = 1
+     let g:ycm_min_num_of_chars_for_completion=1
+     let g:ycm_seed_identifiers_with_syntax=1
+     " let g:ycm_path_to_python_interpreter="/usr/bin/python2.7"
+     nnoremap <silent> <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+     " nnoremap  <silent> <leader>jc :silent YcmCompleter GoToDeclaration<CR>
+     nnoremap  <silent> <leader>jc :YcmCompleter GoToDeclaration<CR>
+     nnoremap   <silent> <leader>jf :YcmCompleter GoToDefinition<CR>
+     nnoremap   <silent> <leader>ji :YcmCompleter GoToInclude<CR>
+    autocmd FileType c setlocal omnifunc=YcmCompleter
+    autocmd FileType cpp setlocal omnifunc=YcmCompleter
+     " nnoremap <silent> <C-o> :silent! <C-o>
+     let g:ycm_key_invoke_completion = '<C-z>'
+     " let g:ycm_keep_logfiles = 1
+     " let g:ycm_log_level = 'debug'
 
 
-    " let g:ycm_semantic_triggers =  {
-    "       \   'c' : ['->', '.'],
-    "       \   'go' : ['.'],
-    "       \   'cpp,objcpp' : ['->', '.', '::'] }
-    endfunction
-    call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
-    " let g:ycm_key_list_select_completion = ['<Enter>']
-endif
-
+     " let g:ycm_semantic_triggers =  {
+     "       \   'c' : ['->', '.'],
+     "       \   'go' : ['.'],
+     "       \   'cpp,objcpp' : ['->', '.', '::'] }
+     endfunction
+     call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
+     " let g:ycm_key_list_select_completion = ['<Enter>']
+ endif
+ autocmd FileType c,cpp let b:ycm_hover = { 'command': 'GetDoc', 'syntax': &syntax }
+"
 " End of YouCompleteMe }}}
 
 
@@ -2079,15 +2082,13 @@ function! s:hook_source_{normalized_plugin_name}() abort
     let g:clang_use_library = 1
     let g:clang_make_default_keymappings = 0
     let g:clang_trailing_placeholder  = 1
-    " let g:clang_library_path = '/usr/lib/llvm-4.0/lib/'
+    let g:clang_library_path = '/usr//lib64/libclang.so.7'
     let g:clang_complete_macros = 1
-    " let g:clang_library_path='/usr/lib/llvm-4.0/lib'
-    " let g:clang_library_path='/usr/lib/llvm-4.0/lib/libclang-4.0.so.1'
     " autocmd FileType c setlocal completefunc=ClangComplete
     " autocmd FileType cpp setlocal completefunc=ClangComplete
     "
-    " autocmd FileType c setlocal omnifunc=ClangComplete
-    " autocmd FileType cpp setlocal omnifunc=ClangComplete
+    autocmd FileType c setlocal omnifunc=ClangComplete
+    autocmd FileType cpp setlocal omnifunc=ClangComplete
     " let g:clang_snippets = 1
     let g:clang_snippets_engine = 'clang_complete'
     " let g:clang_jumpto_back_key = "<C-Y>"
@@ -2331,47 +2332,47 @@ endif
 " forked form https://github.com/octol/vim-cpp-enhanced-highlight
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " call dein#add('octol/vim-cpp-enhanced-highlight', {
-" call dein#add('bladechen/cpp_highlight', {
-"                 \ 'on_ft' : ['c', 'cpp']
-"                 \ })
-"
-"     let plugin_name = 'cpp_highlight'
-"     let normalized_plugin_name = dein#get(plugin_name).normalized_name
-"
-"     function! s:hook_source_{normalized_plugin_name}() abort
-"
-"
-" 		" Highlighting of class scope is disabled by default. To enable set
-"
-" 		let g:cpp_class_scope_highlight = 1
-"
-" 		" Highlighting of member variables is disabled by default. To enable set
-"
-" 		let g:cpp_member_variable_highlight = 1
-"
-" 		" Highlighting of class names in declarations is disabled by default. To enable set
-"
-" 		let g:cpp_class_decl_highlight = 1
-"
-" 		" There are two ways to hightlight template functions. Either
-"
-" 		let g:cpp_experimental_simple_template_highlight = 1
-"
-" 		" which works in most cases, but can be a little slow on large files. Alternatively set
-"
-" 		let g:cpp_experimental_template_highlight = 1
-"
-" 		" which is a faster implementation but has some corner cases where it doesn't work.
-" 		" Note: C++ template syntax is notoriously difficult to parse, so don't expect this feature to be perfect.
-" 		" Highlighting of library concepts is enabled by
-" 		" This will highlight the keywords concept and requires as well as all named requirements (like DefaultConstructible) in the standard library.
-"
-" 		let g:cpp_concepts_highlight = 1
-"
-"
-"     endfunction
-"     call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
-    " let g:ycm_key_list_select_completion = ['<Enter>']
+call dein#add('bladechen/cpp_highlight', {
+                \ 'on_ft' : ['c', 'cpp']
+                \ })
+
+    let plugin_name = 'cpp_highlight'
+    let normalized_plugin_name = dein#get(plugin_name).normalized_name
+
+    function! s:hook_source_{normalized_plugin_name}() abort
+
+
+		" Highlighting of class scope is disabled by default. To enable set
+
+		let g:cpp_class_scope_highlight = 1
+
+		" Highlighting of member variables is disabled by default. To enable set
+
+		let g:cpp_member_variable_highlight = 1
+
+		" Highlighting of class names in declarations is disabled by default. To enable set
+
+		let g:cpp_class_decl_highlight = 1
+
+		" There are two ways to hightlight template functions. Either
+
+		let g:cpp_experimental_simple_template_highlight = 1
+
+		" which works in most cases, but can be a little slow on large files. Alternatively set
+
+		let g:cpp_experimental_template_highlight = 1
+
+		" which is a faster implementation but has some corner cases where it doesn't work.
+		" Note: C++ template syntax is notoriously difficult to parse, so don't expect this feature to be perfect.
+		" Highlighting of library concepts is enabled by
+		" This will highlight the keywords concept and requires as well as all named requirements (like DefaultConstructible) in the standard library.
+
+		let g:cpp_concepts_highlight = 1
+
+
+    endfunction
+    call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
+    let g:ycm_key_list_select_completion = ['<Enter>']
 " End of vim-cpp-enhanced-highlight }}}
 
 
@@ -2380,14 +2381,29 @@ endif
 " https://github.com/junegunn/fzf.vim
 " TODO replaced by https://github.com/Shougo/denite.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
-" call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
-" let plugin_name = 'fzf.vim'
-" let normalized_plugin_name = dein#get(plugin_name).normalized_name
-"
-" function! s:hook_source_{normalized_plugin_name}() abort
-" endfunction
-" call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
+call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
+call dein#add('junegunn/fzf.vim', { 'depends': 'fzf' })
+let plugin_name = 'fzf.vim'
+let normalized_plugin_name = dein#get(plugin_name).normalized_name
+set grepprg=rg\ --vimgrep\ --smart-case\ --follow
+
+function! s:find_git_root()
+    return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+endfunction
+
+command! ProjectFiles execute 'Files' s:find_git_root().'/src'
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg  --column --line-number -g "*.hpp" -g "*.h" -g "*.cpp" -g "*.cc" -g "*.c" --no-heading --color=always --smart-case -- '.shellescape(<q-args>).' '.s:find_git_root().'/src', 1,
+  \   fzf#vim#with_preview({'options': ['--hscroll-off=1', '--keep-right' ,'--cycle', '--preview-window=up:70%', '--bind' , 'ctrl-d:preview-page-down', '--bind', 'ctrl-u:preview-page-up', '--bind', 'k:preview-up',  '--bind', 'j:preview-down'], 'dir': s:find_git_root().'/src'}), <bang>0)
+
+nnoremap <silent><leader>rg :Rg <C-R><C-W><CR>
+nnoremap <silent><leader>rf :Rg <C-R><C-W><CR>
+
+function! s:hook_source_{normalized_plugin_name}() abort
+endfunction
+call dein#set_hook(plugin_name, 'hook_source', function('s:hook_source_' . normalized_plugin_name))
 " End of fzf }}}
 
 " End of backup_plugin }}}
@@ -2397,4 +2413,6 @@ call dein#end()
 filetype plugin indent on
 nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
 
-" vim: set et sw=2 ts=2 fdm=marker ff=unix:
+
+" vim: set et sw=4 ts=4 fdm=marker ff=unix:
+set tags+=$HOME/stdcpp.tags,../tags,../../tags,./tags;../../../tags,../../../../tags

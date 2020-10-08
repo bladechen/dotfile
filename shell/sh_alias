@@ -16,6 +16,7 @@ export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
 
+export TMUX_TMPDIR=~/.tmux/tmp
 
 export FIGNORE='.o:.bak:.tmp'
 export EDITOR=vim
@@ -64,7 +65,7 @@ alias vi='vim'
 alias ctags='ctags -R --sort=yes --c++-kinds=+xp --fields=+KliasS --extra=+q .'
 # ctags  -R --links=no --languages=C,C++ --langmap=C:.c.h --langmap=C++:.C.h.c.cpp.hpp.c++.cc.cp.cxx.h++.hh.hp.hxx  --sort=yes --c++-kinds=+px --fields=+liasSK --extra=+q  -R ./
 # alias ctags='ctags -R --sort=yes --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+liasS --extra=+q .'
-alias tmux='TERM=screen-256color-bce tmux -S $TMPDIR/tmux_session'
+#alias tmux='TERM=screen-256color tmux -S $TMPDIR/tmux_session'
 alias os161-objdump='os161-objdump -mmips:isa32 '
 alias gitdfw='git diff --ignore-space-change'
 
@@ -87,6 +88,7 @@ alias memleak_check="valgrind --tool=memcheck --leak-check=full --show-leak-kind
 alias memusage_check="valgrind --tool=massif --pages-as-heap=yes --massif-out-file=massif.out "
 
 
+source /opt/rh/devtoolset-7/enable
 export USE_YCM=1
 if echo $HOME | grep -q "import" 2>/dev/null
 then
@@ -94,7 +96,11 @@ then
 fi
 
 
-export PATH=/home/cs9242/bin:$PATH
+GRADLE_HOME=/home/myconnect/gradle-6.5
+PATH=$PATH:$GRADLE_HOME/bin
+export GRADLE_HOME GRADLE_USER_HOME PATH
+
+export PATH=/home/cs9242/bin:$PATH:/home/myconnect/.cargo/bin/
 export PATH=$PATH:/home/cs9242/crossdev/arm-2013.05/bin
 export PYTHONPATH=$PYTHONPATH:/home/cs9242/bin/py
 reset_eth1()
@@ -107,5 +113,36 @@ kill_qemu()
 
     ps -ef| grep qemu|awk '{print $2}'|xargs kill -9
 }
-# alias sshaws="ssh $aws_host"
 
+
+alias perf31='ssh root@47.116.99.135' # 172.19.77.32
+alias perf32='ssh root@47.116.12.11'  # 172.19.77.37
+alias perf39='ssh root@47.116.110.220' # 172.19.77.30
+alias perf40='ssh root@47.116.99.249' # 172.19.77.20
+
+alias perf37='ssh root@47.116.96.72'
+alias perf38='ssh root@47.116.105.148'
+alias perf41='ssh root@47.116.109.168'
+alias perf42='ssh root@47.116.110.229'
+
+
+alias perf47='ssh root@101.133.221.54'
+alias perf44='ssh root@47.116.103.171'
+alias perf45='ssh root@47.116.107.171'
+alias perf33='ssh root@47.116.111.217'
+alias perf34='ssh root@47.116.107.119'
+alias perf35='ssh root@47.116.108.67'
+alias builder='ssh mychain@100.83.1.225'
+
+
+alias st1='ssh root@106.15.67.96'
+alias st2='ssh root@106.15.103.238'
+alias st3='ssh root@106.15.64.47'
+alias st4='ssh root@106.14.67.9'
+alias st5='ssh root@47.102.155.188'
+
+
+alias mem1='ssh root@101.133.130.160'
+alias mem2='ssh root@101.133.136.139'
+alias mem3='ssh root@47.103.79.13'
+alias mem4='ssh root@47.103.93.160'

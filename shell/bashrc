@@ -141,6 +141,7 @@ fi
 export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
 source ~/.git-completion.bash
 export SHELL=$BASH_SHELL
+export TMUX_TMPDIR=~/.tmux/tmp
 
 echo 'start bash successfully!'
 

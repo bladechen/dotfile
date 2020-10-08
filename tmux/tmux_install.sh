@@ -19,7 +19,7 @@ wget -O tmux-${TMUX_VERSION}.tar.gz https://github.com/tmux/tmux/releases/downlo
 wget https://github.com/libevent/libevent/releases/download/release-2.1.8-stable/libevent-2.1.8-stable.tar.gz --no-check-certificate 1>/dev/null 2>&1
 
 # wget ftp://ftp.gnu.org/gnu/ncurses/ncurses-5.9.tar.gz --no-check-certificate
-wget ftp://ftp.gnu.org/gnu/ncurses/ncurses-6.0.tar.gz --no-check-certificate 1>/dev/null 2>&1
+wget http://ftp.gnu.org/gnu/ncurses/ncurses-6.0.tar.gz --no-check-certificate 1>/dev/null 2>&1
 
 # extract files, configure, and compile
 

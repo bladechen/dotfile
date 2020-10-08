@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 # should be setup after setup zsh/bash
 cp ycm_extra_conf.py ~/.ycm_extra_conf.py
 CUR=`pwd`/vimrc
@@ -13,7 +14,7 @@ then
     cd ~/tmp/vim/vim
     mkdir -p $HOME/vim80/
     # ./configure --prefix=$HOME/vim81/  --with-features=huge   --enable-rubyinterp  --enable-pythoninterp       --with-python-config-dir=/usr/lib/python2.7/             --enable-perlinterp             --enable-gui=gtk2 --enable-cscope             --enable-luainterp=yes  --enable-cscope  --enable-largefile
-    ./configure --prefix=$HOME/vim80/  --with-features=huge   --enable-rubyinterp  --enable-pythoninterp                --enable-perlinterp             --enable-gui=gtk2 --enable-cscope             --enable-luainterp=yes  --enable-cscope  --enable-largefile --with-python-command=`which python`
+    ./configure --prefix=$HOME/vim80/  --with-features=huge   --enable-rubyinterp  --enable-pythoninterp                --enable-perlinterp             --enable-gui=gtk2 --enable-cscope             --enable-luainterp=yes  --enable-cscope  --enable-largefile --with-python-command=`which python3`
 
     # --with-lua-prefix=/usr/local/Cellar/lua/5.3.4_2/
 
