@@ -9,11 +9,11 @@ fi
 
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting 2>/dev/null || true
 git clone git://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions 2>/dev/null || true
+
 CUR=`pwd`/zshrc
 cd ~
 mv ~/.zshrc ~/.zshrc_bak 2>/dev/null || true
 ln -s $CUR ./.zshrc
-
 cd -
 
 CUR=`pwd`/bashrc
@@ -21,9 +21,16 @@ cd ~
 
 mv ~/.bashrc ~/.bashrc_bak 2>/dev/null || true
 ln -s $CUR ./.bashrc
-
-rm ./.bash_profile 2>/dev/null || true
-ln -s $CUR ./.bash_profile
 cd -
+
+
+CUR=`pwd`/git-completion.bash
+echo $CUR
+
+cd ~
+rm .git-completion.bash 2>/dev/null || true
+ln -s $CUR ./.git-completion.bash
+cd -
+
 
 
