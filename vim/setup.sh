@@ -8,7 +8,7 @@ then
     mkdir -p ~/tmp/vim
 
     cd  ~/tmp/vim
-    git clone https://github.com/vim/vim.git
+    git clone http://github.com/vim/vim.git
     cd -
     cd ~/tmp/vim/vim
     mkdir -p $HOME/vim80/

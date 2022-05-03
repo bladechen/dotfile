@@ -13,11 +13,11 @@ cd -
 
 
 sudo apt-get update 1>/dev/null
-sudo apt-get install exuberant-ctags cmake  python-dev python liblua5.2-dev "lua5.2" -y 1>/dev/null
+sudo apt-get install exuberant-ctags cmake  python3-dev liblua5.2-dev "lua5.2" -y 1>/dev/null
 sudo apt-get install clang -y 1>/dev/null
-sudo apt-get install libssl1.0.0 libssl-dev -y 1>/dev/null
+sudo apt-get install  libssl-dev -y 1>/dev/null
 sudo apt-get install ruby -y 1>/dev/null
-sudo apt-get install awscli -y 1>/dev/null
+#sudo apt-get install awscli -y 1>/dev/null
 sudo apt-get install cowsay -y 1>/dev/null
 sudo apt-get install gcc -y 1>/dev/null
 sudo apt-get install g++ -y 1>/dev/null
@@ -78,22 +78,22 @@ fi
 cd -
 
 # 2G swap
-SWAPFILE=/mnt/swapfile.swap
+#SWAPFILE=/mnt/swapfile.swap
 
-sudo cat /proc/swaps| grep swapfile 1>/dev/null 2>&1
-if [ "$?" -ne "0" ]
-then
-
-	sudo swapoff -a
-	sudo rm -rf "$SWAPFILE"
-	sudo dd if=/dev/zero of=$SWAPFILE bs=1M count=2048
-	sudo mkswap $SWAPFILE
-	sudo chmod 0600 $SWAPFILE
-	sudo swapon $SWAPFILE
-	sudo cp ./install_env/swapfile /etc/init.d/swapfile
-	sudo chmod 0550 /etc/init.d/swapfile
-	sudo update-rc.d swapfile defaults
-fi
+#sudo cat /proc/swaps| grep swapfile 1>/dev/null 2>&1
+#if [ "$?" -ne "0" ]
+#then
+#
+#	sudo swapoff -a
+#	sudo rm -rf "$SWAPFILE"
+#	sudo dd if=/dev/zero of=$SWAPFILE bs=1M count=2048
+#	sudo mkswap $SWAPFILE
+#	sudo chmod 0600 $SWAPFILE
+#	sudo swapon $SWAPFILE
+#	sudo cp ./install_env/swapfile /etc/init.d/swapfile
+#	sudo chmod 0550 /etc/init.d/swapfile
+#	sudo update-rc.d swapfile defaults
+#fi
 
 
 cd $HOME/dotfile/shell/
